@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pl">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="style.css">
+   <title>"Selected programs in C and GWBasic. Mainframe presentations"</title>
+   <meta name="Author" content="Leszek Buczek">
+   <meta name="Description" content="Programming in C (Cramer method, 2-D plot, ...), GW-Basic (Gregorian Calendar, 3-D plot, Electrostatic field, ...) with free and full program codes, and Mainframe (.pdf presentations - COBOL, JCL, TSO, DFSORT and ICETOOL). [Polish] Programowanie w C (Metoda Cramera, Wykres funkcji, ...), GW-Basic (Kalendarz Gregoriański, Wykres trójwymiarowy, Pole elektrostatyczne, ...) z pełnymi kodami programów gotowymi do bezpłatnego skopiowania i Mainframe (prezentacje w pdf - COBOL, JCL, TSO, DFSORT i ICETOOL).">
+   <meta name="Keywords" content="Borland Turbo C++, Programowanie w C, C programming, Metoda Cramera, Cramer method, Wykres funkcji, Plot, GW-Basic, ASCII, Kalendarz Gregoriański, Gregorian Calendar, Wykres trójwymiarowy, 3-D plot, Pole elektrostatyczne, Electrostatic field, Mainframe, COBOL, JCL, TSO, DFSORT, ICETOOL">
+   <style>
+      a:link, a:visited { color: Blue; }
+      a:hover, a:active { color: BlueViolet; text-decoration: none; font-size: 120%; }
+   </style>
+</head>
+
+   <body>
+
+      <div class="top">
+         <h1>Selected programs in 'C' and GWBasic<br/>Mainframe presentations</h1>
+      </div>
+
+      <div class="menu">
+         <a href="omnie.html">About me (O sobie)</a>
+      </div>
+
+      <p style="color:DarkBlue;">The purpose of this website is to share my knowledge of basic, academic programming that is still not available on the Internet or in other publications, with complete codes ready to run. Among these several topics, I would like to point four of them here:
+      <br><br>
+      - Solving 'n' equations using Cramer's method (in 'C' language) - a purely academic topic, but the program is ready for analysis and extension.
+      <br>
+      - Electrostatic charge field graphics (in GW-Basic) - for primary and secondary schools, what is not so easy to convey experimentally.
+      <br>
+      - A two-dimensional graph of a mathematical function (in 'C' language) with the possibility of exchanging many of its parameters and subjecting it to automatic analysis.
+      <br>
+      - Three-dimensional graph of a mathematical function (in GW-Basic). The program can be used not only for the function: Scanning the seabed or the surface of the famous caves, requires an algorithm that converts each point in space, defined by the image resolution, into a point of a flat screen - it is less than 30 lines of code (lines from 10000 to 10300 of the program XYZ_EN in GW-Basic).
+      <br>
+      - ...
+      <br><br>
+
+      Once you copy some of my code and even change it to your preferred language, you own it. You have full rights to change that copy to suit your needs and have full control over it.
+      <br><br>
+      To be sure that selected part could be a subject of your interest, look into the first file (<b>"before you start"</b>) of each of four main topics. You will find there answers your following questions:
+      <br>
+      - Is it really something that is part of my interest?
+      <br>
+      - How can I install needed environment if not 'Dev C++' (it is Borland Turbo C++ Version 3.0 or GW-Basic)?
+      <br>
+      - How can I run the provided below code?
+      <br>
+      - How can I change input data?
+
+      <br><br>
+      </p>
+
+      <h2 style="color:DarkBlue;">Contents:</h2>
+      <p><a href="#A1">   Determinant and the Cramer method ("C" language, Dev C++ and Turbo C++)</a></p>
+      <p><a href="#A2">   Plot ("C" language, Turbo C++)</a></p>
+      <p><a href="#A3">   Programs in GW-Basic</a></p>
+      <p><a href="#A4">   Mainframe - presentations (in Polish only)</a></p>
+
+      <br><hr><br>
+
+      <p>Celem tej strony internetowej jest podzielenie się moją wiedzą z zakresu podstawowego, akademickiego programowania, którego nadal nie ma ani w Internecie, ani w innych publikacjach, z pełnymi kodami gotowymi do uruchomienia. Pośród tych kilku tematów, chciałbym tu wyszczególnić cztery z nich:
+      <br><br>
+      - Rozwiązywanie 'n' równań metodą Cramera (w języku 'C') - zagadnienie czysto akademickie, ale program jest gotowy do analizy i rozszerzenia.
+      <br>
+      - Grafika pól ładunków elektrostatycznych (w GW-Basic) - dla szkół podstawowych i średnich, czyli to, co nie tak łatwo przekazać w sposób eksperymentalny.
+      <br>
+      - Dwuwymiarowy wykres funkcji matematycznej (w języku 'C') z możliwością wymiany wielu jej parametrów i poddania automatycznej analizie.
+      <br>
+      - Trójwymiarowy wykres funkcji matematycznej (w GW-Basic). Program może być użyty nie tylko dla funkcji: Skanowanie dna morskiego czy powierzchni znanych jaskiń, wymaga algorytmu, który wymienia każdy punkt w przestrzeni, określony przez rozdzielczość obrazu, na punkt płaskiego ekranu - to mniej niż 30 linii kodu (linie od 10000 do 10300 programu XYZ_PL w GW-Basic).
+      <br>
+      - ...
+      <br><br>
+
+      Gdy skopiujesz jakiś mój kod a nawet zmienisz go na preferowany przez Ciebie język, stajesz się jego właścicielem. Masz pełne prawo zmieniać tę kopię na swoje potrzeby i w pełni nad nią panować.
+      <br><br>
+      Aby mieć pewność, że wybrana część może być przedmiotem Twojego zainteresowania, popatrz do pierwszego pliku (<b>"zanim zaczniesz"</b>) każdego z czterech głównych tematów. Znajdziesz tam odpowiedzi na Twoje ewentualne następujące pytania:
+      <br>
+      - Czy naprawdę jest to coś, co jest częścią mojego zainteresowania?
+      <br>
+      - Jak mogę zainstalować potrzebne środowisko, jeśli nie jest nim 'Dev C++' (jest to np. Borland Turbo C++ Version 3.0 lub GW-Basic)?
+      <br>
+      - Jak mogę uruchomić poniższy kod?
+      <br>
+      - Jak mogę zmienić dane wejściowe?
+
+      <br><br>
+      </p>
+
+      <h2>Zawartość:</h2>
+      <p><a href="#A1">   Wyznacznik i metoda Cramera (język "C", Dev C++ i Turbo C++)</a></p>
+      <p><a href="#A2">   Wykres funkcji (język "C", Turbo C++)</a></p>
+      <p><a href="#A3">   Programy w GW-Basic</a></p>
+      <p><a href="#A4">   Mainframe - prezentacje</a></p>
+
+      </p>
+      <br>
+      <hr>
+
+      <h2 id="A1"; style="color:blue;">Determinant and the Cramer method (Wyznacznik i metoda Cramera)</h2>
+
+      <b>Before you start (English): </b> <a href="Macierze\Opisy\Determinant and the Cramer method in Dev C++.pdf" title="Programs' description" target="_blank">Determinant and the Cramer method in Dev C++</a>
+      <br>
+      <b>Zanim zaczniesz  (Polish ): </b> <a href="Macierze\Opisy\Wyznacznik i metoda Cramera w Dev C++.pdf" title="Opis programów" target="_blank">Wyznacznik i metoda Cramera w Dev C++</a>
+      <ol>	
+           <li><a href="Macierze/M_1.C" title="Program's code (kod programu) - Dev C++" target="_blank">Calculation of a determinant of a matrix - max 10x10 (Obliczanie wyznacznika macierzy - max 10x10)</a></li>
+           <li><a href="Macierze/M_2.C" title="Program's code (kod programu) - Dev C++" target="_blank">Solving a system of 'n' linear equations - Cramer's method (Rozwiązywanie układu 'n' równań liniowych - Metoda Cramera)</a></li>
+      </ol>
+
+      <br><br>
+
+      <h2 id="A2"; style="color:blue;">Plot (Wykres funkcji)</h2>
+
+      <b>Turbo C++ installation (English): </b> <a href="Wykres\Opisy\Borland Turbo C++ Installation.pdf" title="Turbo C++ description" target="_blank">Borland Turbo C++ Installation and programs description</a>
+      <br>
+      <b>Instalacja Turbo C++   (Polish ): </b> <a href="Wykres\Opisy\Instalacja Borland Turbo C++.pdf" title="Opis Turbo C++" target="_blank">Instalacja Borland Turbo C++ i opis programów</a>
+
+      <br><br>
+
+      <b>Before you start (English): </b> <a href="Wykres\Opisy\Plot - description in English.pdf" title="Program's description - Plot - Turbo C++" target="_blank">Plot of a function - program description</a>
+      <ul>	
+           <li><a href="Wykres/Plot.CPP" title="Program's code - Plot - Turbo C++" target="_blank">Making a two-dimensional plot of a function - <b>English</b></a></li>
+      </ul>
+      <b>Zanim zaczniesz (Polish): </b> <a href="Wykres\Opisy\WYKRES - description in Polish.pdf" title="Opis programu - Wykres dwuwymiarowej funkcji - Turbo C++" target="_blank">Wykres funkcji - opis programu</a>
+      <ul>	
+           <li><a href="Wykres/Wykres.CPP" title="Kod programu - Wykres dwuwymiarowej funkcji - Turbo C++" target="_blank">Sporządzanie dwuwymiarowego wykresu funkcji - <b>Polish</b></a></li>
+      </ul>
+
+      <br><br>
+
+      <h2 id="A3"; style="color:blue;">Programs in GW-Basic (Programy w WG-Basic)</h2>
+
+      <b>GW-Basic installation (English): </b> <a href="GWBasic\Opisy\GWBasic - Before you start (Zanim zaczniesz) - in English.pdf" title="GW-Basic environment" target="_blank">GW-Basic (PC-Basic) installation and short language description - in English</a>
+      <br>
+      <b>Instalacja GW-Basic   (Polish ): </b> <a href="GWBasic\Opisy\GWBasic - Zanim zaczniesz (Before you start) - in Polish.pdf" title="Środowisko GW-Basic" target="_blank">Instalacja GW-Basic (PC-Basic) i krótki opis języka - po polsku</a>
+      <br><br>
+
+      <b>Before you start (English): </b> <a href="GWBasic\Opisy\ASCII - description in English.pdf" title="Program's description" target="_blank">ASCII - description in English</a>
+      <ul style="list-style-type:circle;">
+           <li><a href="GWBasic/ASCII_EN.txt" title="Program's code" target="_blank">ASCII - Checking for available characters - <b>English</b></a></li>
+      </ul>
+      <b>Zanim zaczniesz  (Polish ): </b> <a href="GWBasic\Opisy\ASCII - description in Polish.pdf" title="Opis programu" target="_blank">ASCII - opis po polsku</a>
+      <ul style="list-style-type:circle;">
+           <li><a href="GWBasic/ASCII_PL.txt" title="Kod programu" target="_blank">ASCII - Sprawdzenie dostępności znaków - <b>Polish</b></a></li>
+      </ul>
+      <br>
+
+      <b>Before you start (English): </b> <a href="GWBasic\Opisy\Gregorian Calendar - description in English.pdf" title="Program's description" target="_blank">Gregorian Calendar - description in English</a>
+      <ul style="list-style-type:circle;">
+           <li><a href="GWBasic/Kalen_EN.txt" title="Program's code" target="_blank">Gregorian Calendar - <b>English</b></a></li>
+      </ul>
+      <b>Zanim zaczniesz  (Polish ): </b> <a href="GWBasic\Opisy\Kalendarz Gregoriański - description in Polish.pdf" title="Opis programu" target="_blank">Kalendarz Gregoriański - opis po polsku</a>
+      <ul style="list-style-type:circle;">
+           <li><a href="GWBasic/Kalen_PL.txt" title="Kod programu" target="_blank">Kalendarz Gregoriański - <b>Polish</b></a></li>
+      </ul>
+      <br>
+
+      <b>Before you start (English): </b> <a href="GWBasic\Opisy\Three dimensional function - description in English.pdf" title="Program's description" target="_blank">Three dimensional function - description in English</a>
+      <ul style="list-style-type:circle;">
+           <li><a href="GWBasic/XYZ_EN.txt" title="Program's code" target="_blank">Three dimensional function - <b>English</b></a></li>
+      </ul>
+      <b>Zanim zaczniesz  (Polish ): </b> <a href="GWBasic\Opisy\Funkcja 3-D - description in Polish.pdf" title="Opis programu" target="_blank">Funkcja 3-D - opis po polsku</a>
+      <ul style="list-style-type:circle;">
+           <li><a href="GWBasic/XYZ_PL.txt" title="Kod programu" target="_blank">Funkcja trójwymiarowa - <b>Polish</b></a></li>
+      </ul>
+      <br>
+
+      <b>Before you start (English); Zanim zaczniesz  (Polish ): </b> <a href="GWBasic\Opisy\Pole Elektrostatyczne Dwóch Ładunków - description in both Polish and English.pdf" title="Program's description (Opis programu)" target="_blank">Electrostatic field (Pole Elektrostatyczne) - description in both Polish and English</a>
+      <ul style="list-style-type:circle;">
+           <li><a href="GWBasic/P_ELE_en.txt" title="Program's code" target="_blank">Electrostatic field - <b>English</b></a></li>
+           <li><a href="GWBasic/P_ELE_pl.txt" title="Kod programu" target="_blank">Pole elektrostatyczne dwóch ładunków - <b>Polish</b></a></li>
+      </ul>
+      <b>Dokumentacja Techniczna   : </b> <a href="GWBasic\Opisy\Pole Elektrostatyczne Dwóch Ładunków - Dokumentacja Techniczna.pdf" title="Opis każdej linii programu" target="_blank">Pole Elektrostatyczne Dwóch Ładunków - Dokumentacja Techniczna (Technical Design in Polish only)</a>
+
+      <br><br><br>
+
+      <h2 id="A4"; style="color:blue;">Mainframe - prezentacje (in Polish only)</h2>
+      <p style="color:DarkBlue;">Since there is a lot of publications on Internet about the <i>Mainframe</i> technology in English, I have decided to do some presentations in Polish only. However, an English reader can find them quite useful because of technical terms that have international meanings.  The same time there is a lack of a good and comprehensive written knowledge about the <i>Mainframe</i> in Polish language.<br>
+      The files below have the extension .PPTX and are accessed only while downloaded. However, they contain full information (because they contain <i>PowerPoint</i> 'Notes').<br>
+      You can always exchange them to .PDF files. They will only contain slides without 'Notes', but the readability of the files increases.</p>
+
+      <p>Ponieważ w Internecie jest dużo publikacji na temat technologii <i>Mainframe</i> w języku angielskim, postanowiłem zrobić prezentację tylko w języku polskim. Jednakże angielski czytelnik może uznać je za całkiem przydatne ze względu na zawartość techniczną, która ma oddźwięk języka  międzynarodowego.  Jednocześnie brakuje dobrej i kompleksowej dokumentacji na temat <i>Mainframe</i> w języku polskim.<br>
+      Poniższe pliki mają rozszerzenie .PPTX i są dostępne tylko poprzez ich pobieranie (<i>download</i>). Zawierają one jednak pełne tematycznie informacje (ponieważ mają w sobie 'Notatki' programu <i>PowerPoint</i>).<br>
+      Zawsze możesz z nich zrobić pliki z rozszerzeniem .PDF. Będą one zawierać tylko slajdy bez 'Notatek' ale czytelność plików będzie lepsza.</p>
+      <br>
+      <ul>
+         <li><a href="Prezentacje/COBOL.pptx" title="COBOL - opis języka" target="_blank">COBOL</a></li>
+         <li><a href="Prezentacje/TSO - edytor.pptx" title="Edytor tekstu" target="_blank">TSO - edytor</a></li>
+         <li><a href="Prezentacje/JCL.pptx" title="Job Control Language - opis języka" target="_blank">JCL</a></li>
+         <li><a href="Prezentacje/Programy narzędziowe.pptx" title="SORT i inne programy wspomagające operacje na danych" target="_blank">Programy narzędziowe</a></li>
+         <li><a href="Prezentacje/ICETOOL.pptx" title="Opis działania 17 operatorów ICETOOL'a" target="_blank">ICETOOL</a></li>
+         <li><a href="Prezentacje/ICETOOL - narzędzie do raportowania.pptx" title="Tworzenie raportów na bazie danych w plikach" target="_blank">ICETOOL - narzędzie do raportowania</a></li>
+         <br>
+      </ul>
+
+      <br><br>
+
+      <div class="footer">
+         <a href="Stopka_pl.html" title="Co to znaczy być programistą?" target="_blank">Dlaczego 'GW-Basic' i 'C'? (Polish)</a>  |  <a href="Stopka_en.html" title="What does it mean to be a programmer?" target="_blank">Why 'GW-Basic' and 'C'? (English)</a>
+      </div>
+
+      <br><br>
+
+   </body>
+
+</html>
