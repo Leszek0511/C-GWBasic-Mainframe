@@ -2,6 +2,30 @@
 
 You can find sample topics here, for schools with codes that you can expand, replace modules with your own or extract some of them when creating your own programs. <br>
 
+Menu explanation: <br>
+1. GWBasic
+&emsp; Installing GW-Basic (PC-Basic) and short description about operations in GW-Basic <br>
+&emsp; (GWBasic - Before you start … .pdf)
+   - ASCII_en.TXT (ASCII - description in English.pdf)
+   - Kalen_en.TXT (Gregorian Calendar … .pdf)
+   - P_ELE_en.TXt (Electrostatic field/Pole elektrostatyczne … .pdf)
+   - XYZ_en.TXT (Three dimensional function … .pdf)
+2. Macierze - Matrices
+   - M-1.c and M_2.c (Determinant and the Cramer method … .pdf)
+3. Prezentacje - Mainframe presentations (in Polish only)
+   - COBOL.pptx
+   - ICETOOL - narzędzie do raportowania.pptx (ICETOOL - reporting tool)
+   - ICETOOL.pptx
+   - JCL.pptx
+   - Programy Narzędziowe.pptx (Utility programs)
+   - TSO - edytor.pptx (TSO - editor)
+4. Wykres - Plot <br>
+&emsp; Installing Turbo C++ and Plot.CPP program's description <br>
+&emsp; (Borland Turbo C++ Installation.pdf)
+   - Plot.CPP (Plot - description in English.pdf)
+
+<br>
+
 I realize that there will not be a large group of visitors to this website due to: <br>
 - age of codes: the end of the last century, <br>
 - these codes were poorly rated by IT companies where I applied for a job as a programmer, <br>
