@@ -27,9 +27,9 @@ Menu explanation: <br>
 <br>
 
 I realize that there will not be a large group of visitors to this website due to: <br>
-- age of codes: the end of the last century, <br>
-- these codes were poorly rated by IT companies where I applied for a job as a programmer, <br>
-- currently 'archaic' work environments (TURBO C++ v.3.0, GWBasic), which are no longer used by programmers and even less by teachers of computer science, mathematics and physics. I cannot exchange these codes for something that EVERYONE can have, because such an environment does not exist. <br>
+- age of codes: the end of the last century. However, the Pythagorean theorem is much older, alive and doing well, <br>
+- these codes have not allowed me to get a job where I applied for a programmer position, <br>
+- currently 'archaic' work environments (TURBO C++ v.3.0, GW-Basic), which are no longer used by programmers and even less by teachers of computer science, mathematics and physics. I cannot exchange these codes for something that EVERYONE can have, because such an environment does not exist. <br>
 
 I have decided to publish this page because I always shared my knowledge selflessly. <br><br>
 
@@ -46,9 +46,9 @@ You will find links to about 30 books on programming in the 'C' language here. T
 Tu znajdziesz kilka przykładowych tematów przeznaczonych dla szkół z kodami, które można rozwinąć, wymienić moduły na swoje własne lub wyodrębnić niektóre z nich przy tworzeniu własnych programów. <br>
 
 Zdaję sobie sprawę, że nie będzie licznego grona wejść na tę stronę internetową ze względu na: <br>
-- wiek kodów: koniec tamtego wieku, <br>
-- kody te zostały nisko ocenione przez firmy informatyczne, gdzie składałem podania o pracę, <br>
-- obecnie 'archaiczne' środowiska pracy (TURBO C++ v.3.0, GWBasic), którymi nie posługują się już programiści a tym bardziej nauczyciele informatyki, matematyki i fizyki. Nie mogę tych kodów wymienić na coś, czym mogą dysponować WSZYSCY, bo takiego środowiska nie ma. <br>
+- wiek kodów: koniec tamtego wieku. Jednakże twierdzenie Pitagorasa jest znacznie starsze, żyje i czuje się znakomicie, <br>
+- kody te nie pozwoliły mi zdobyć pracę, gdzie starałem się o stanowisko programisty, <br>
+- obecnie 'archaiczne' środowiska pracy (TURBO C++ v.3.0, GW-Basic), którymi nie posługują się już programiści a tym bardziej nauczyciele informatyki, matematyki i fizyki. Nie mogę tych kodów wymienić na coś, czym mogą dysponować WSZYSCY, bo takiego środowiska nie ma. <br>
 
 A jednak publikuję tę stronę bo zawsze bezinteresownie dzieliłem się swoją wiedzą. <br><br>
 
