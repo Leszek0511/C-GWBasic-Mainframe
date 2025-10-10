@@ -1,0 +1,349 @@
+10 '****************************************************************************
+20 '*                         Leszek Buczek, rok 1991                          *
+25 '* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*
+30 '*        Program na obr˘t punktu jednoczenie wok˘ osi OX, OY i OZ.       *
+40 '*     Program to realizujĄcy to linie od numeru 10000 do koäca programu.   *
+45 '*--------------------------------------------------------------------------*
+50 '* Linie od 1100 do 2420 sĄ nieistotne dla dziaania programu. Jeľeli zde-  *
+55 '* cydujesz si© je usunĄ†, musisz pamieta† o wprowadzeniu zmiennych XPQ i   *
+60 '* YPQ - wsp˘rz©dnych rodka ukadu wsp˘rz©dnych i FQ - dugoci jedno-   *
+65 '* stek wszystkich osi w pikselach. Dla "SCREEN 9" rodek ekranu to XPQ=320,*
+70 '* YPQ=175 a FQ jest najlepsze w granicach od 20 do 80.                     *
+75 '****************************************************************************
+100 KEY OFF
+110 SCREEN 9
+120 '
+130 ' Dla monitora z 1991 r. musiaem przyjĄ† KOREKCJA=1.4 poszerzajĄc Y-kowĄ
+140 ' wsp˘rz©dnĄ obrazu tak, aby okrĄg by okr©giem a nie spaszczonĄ elipsĄ
+150 KOREKCJA = 1.4           '* wsp˘czynnik korygujĄcy zw©ľenie obrazu na osi Y
+160 '
+170 ' Stablicowanie punkt˘w dla maego rysunku ukadu wsp˘rz©dnych w lewym, dolnym rogu
+180 DIM UX(35),UY(35),UZ(35),XU(35),YU(35)
+190 DIM IX(11),IY(11),IZ(11),XI(11),YI(11)
+192 ' Stae matematyczne - gotowe do uľycia
+194 E = 2.71828   ' Liczba Nepera
+196 PI = 3.141593 ' Liczba "pi"
+200 '
+210 ' Deklaracja granic obrazu graficznego w pikselach - (350,175) to rodek ukadu wsp˘rz©dnych
+220 XX.MIN=130  '  <-- 350-220; na osi X wykres b©dzie w przedziale (XX.MIN+MNIEJ;XX.MAX-MNIEJ)...
+230 XX.MAX=570  '  <-- 350+220; ... co daje na ZASIEG liczb©  ((XX.MAX-MNIEJ) - (XX.MIN+MNIEJ)) / 2
+240 YY.MIN=25   '   <-- 175-150
+250 YY.MAX=325  '   <-- 175+150
+260 MNIEJ = 100 ' moľe trzeba t© liczb© zwi©kszy† ?
+270 '
+280 ' Deklaracja parametr˘w opcjonalnych
+290 SPLASZCZ = 1    ' spaszczenie/wyduľenie grafiki wzduľ osi OY (1 - bez tego efektu)
+300 ZASIEG = 4      ' tu znaczy, ľe x=(-4;4) i z=(-4;4)  <-- graniczne wartoci funkcji
+310 '   KĄty obrotu wok˘ osi OX, OY i OZ.  15,15,0 da efekt jak w Excel lub matplotlib w Python
+320 AX = 15: AY = 15: AZ = 0
+330 '***************************************************************************
+340 '* Ustalanie przez uľytkownika z klawiatury parametr˘w grafiki             *
+350 '***************************************************************************
+360 CLS
+370 LOCATE 1,1: COLOR 15: PRINT "Wybierz uk" CHR$(136) "ad wsp" CHR$(162) CHR$(136) "rz" CHR$(169) "dnych: Lewoskr" CHR$(169) "tny [L], prawoskr" CHR$(169) "tny [ka" CHR$(190) "dy inny klawisz]";: INPUT " ", UKLAD$
+380 IF UKLAD$=CHR$(76) OR UKLAD$=CHR$(108) THEN U=1 ELSE U=-1
+390 '
+400 ' *** Spaszczenie lub wyduľenie wykresu.  SPLASZCZ=1 ani nie spaszcza ani nie wyduľa
+405 ' SPLASZCZ=0.5 spaszczy wykres o poow©; SPLASZCZ=2 wyduľy wykres dwukrotnie
+410 ' P$, LP, P1$ i ZP$ to tylko lokalne zmienne pomocnicze uľyte pi©ciokrotnie kaľda
+420 LOCATE 25,5: PRINT "             Sp" CHR$(136) "aszczenie/wyd" CHR$(136) "u" CHR$(190) "enie wykresu wzd" CHR$(136) "u" CHR$(190) " osi OY              ";
+430 P$ = STR$(SPLASZCZ): LP = LEN(P$): P1$ = MID$(P$,2,LP-1)  ' usuni©cie pierwszej spacji
+440 LOCATE 2,1: PRINT USING "&"; "Sp"; CHR$(136); "aszczenie/wyd"; CHR$(136); "u"; CHR$(190); "enie ["; P1$; "]:";: INPUT " ", ZP$     ' ZP jak Zmienna Pomocnicza
+450 IF ZP$ <> "" THEN SPLASZCZ=VAL(ZP$)     ' powieli warto† domylnĄ lub ostatnio wpisanĄ
+460 '
+500 '*** Rzeczywista dla funkcji rozpi©to† wartoci X i Z wok˘ poczĄtku ukadu wsp˘rz©dnych
+503 ' ZASIEG=n oznacza zakres wartoci X=(-n;n) i jednoczenie Z=(-n;n)
+506 ' W pikselach to zawsze b©dzie X=(XX.MIN + MNIEJ;XX.MAX - MNIEJ) gdyby nie byo obrotu ukadu
+510 ' P$, LP, P1$ i ZP$ to tylko lokalne zmienne pomocnicze (tu uľyte po raz drugi)
+520 LOCATE 25,5: PRINT "Przyk" CHR$(136) "ad: Zasi" CHR$(169) "g = 10 oznacza graniczne warto" CHR$(152) "ci X=(-10;10) i Z=(-10;10)";
+530 P$ = STR$(ZASIEG): LP = LEN(P$): P1$ = MID$(P$,2,LP-1)  ' usuni©cie pierwszej spacji
+540 LOCATE 3,1: PRINT USING "&"; "Zasi"; CHR$(169); "g ["; P1$; "]:";: INPUT " ", ZP$
+550 IF ZP$ <> "" THEN ZASIEG=VAL(ZP$)     ' powieli warto† domylnĄ lub ostatnio wpisanĄ
+560 ' Co ile pikseli jest jednostka? Jeľeli ZASIEG odpowiada liczbie
+570 '      ((XX.MAX-MNIEJ) - (XX.MIN+MNIEJ)) / 2  pikseli, to jednostka ma FQ.W pikseli:
+580 FQ.W = (((XX.MAX-MNIEJ) - (XX.MIN+MNIEJ)) / 2 ) / ZASIEG  ' a odst©py pomi©dzy liniami:
+590 KROK = ZASIEG / 20 ' <-- STEP p©tli FOR  aby byo 40 linii pomi©dzy (-ZASIEG; ZASIEG) czyli 2*ZASIEG
+595 '
+600 ' *** KĄt obrotu wok˘ osi OX o kierunku zgodnym z wyborem ukadu wsp˘rz©dnych
+610 ' P$, LP, P1$ i ZP$ to tylko lokalne zmienne pomocnicze (tu uľyte po raz trzeci)
+620 LOCATE 25,5: PRINT "             K" CHR$(165) "t obrotu wok" CHR$(162) CHR$(136) " osi OX w stopniach (-360;360)             ";
+630 AX1 = AX: IF AX1 >= 0 THEN P$ = STR$(AX1): LP = LEN(P$): P1$ = MID$(P$,2,LP-1) ELSE P1$ = STR$(AX1)  ' usuni©cie pierwszej spacji dla liczby nieujemnej
+640 LOCATE 4,1:PRINT USING "&"; "K"; CHR$(165); "t OX ["; P1$; CHR$(248); "]:";: INPUT " ", ZP$       ' KĄt obrotu wok˘ osi OX
+650 IF ZP$ <> "" THEN AX1=VAL(ZP$): AX=AX1    ' powieli warto† domylnĄ lub ostatnio wpisanĄ
+660 IF AX1>360 OR AX1<-360 THEN LOCATE 4,1: PRINT SPC(25): GOTO 640
+670 '
+700 ' *** KĄt obrotu wok˘ osi OY o kierunku zgodnym z wyborem ukadu wsp˘rz©dnych
+710 ' P$, LP, P1$ i ZP$ to tylko lokalne zmienne pomocnicze (tu uľyte po raz czwarty)
+720 LOCATE 25,5: PRINT "             K" CHR$(165) "t obrotu wok" CHR$(162) CHR$(136) " osi OY w stopniach (-360;360)             ";
+730 AY1 = AY: IF AY1 >= 0 THEN P$ = STR$(AY1): LP = LEN(P$): P1$ = MID$(P$,2,LP-1) ELSE P1$ = STR$(AY1)  ' usuni©cie pierwszej spacji dla liczby nieujemnej
+740 LOCATE 5,1:PRINT USING "&"; "K"; CHR$(165); "t OY ["; P1$; CHR$(248); "]:";: INPUT " ", ZP$       ' KĄt obrotu wok˘ osi OY
+750 IF ZP$ <> "" THEN AY1=VAL(ZP$): AY=AY1    ' powieli warto† domylnĄ lub ostatnio wpisanĄ
+760 IF AY1>360 OR AY1<-360 THEN LOCATE 5,1: PRINT SPC(25): GOTO 740
+770 '
+800 ' *** KĄt obrotu wok˘ osi OZ o kierunku zgodnym z wyborem ukadu wsp˘rz©dnych
+810 ' P$, LP, P1$ i ZP$ to tylko lokalne zmienne pomocnicze (tu uľyte po raz piĄty)
+820 LOCATE 25,5: PRINT "             K" CHR$(165) "t obrotu wok" CHR$(162) CHR$(136) " osi OZ w stopniach (-360;360)             ";
+830 AZ1 = AZ: IF AZ1 >= 0 THEN P$ = STR$(AZ1): LP = LEN(P$): P1$ = MID$(P$,2,LP-1) ELSE P1$ = STR$(AZ1)  ' usuni©cie pierwszej spacji dla liczby nieujemnej
+840 LOCATE 6,1:PRINT USING "&"; "K"; CHR$(165); "t OZ ["; P1$; CHR$(248); "]:";: INPUT " ", ZP$       ' KĄt obrotu wok˘ osi OZ
+850 IF ZP$ <> "" THEN AZ1=VAL(ZP$): AZ=AZ1    ' powieli warto† domylnĄ lub ostatnio wpisanĄ
+860 IF AZ1>360 OR AZ1<-360 THEN LOCATE 6,1: PRINT SPC(25): GOTO 840
+870 LOCATE 25,5: PRINT "                            Prosz" CHR$(169) " czeka" CHR$(134) " ...                           ";
+880 '
+1000 ' *** Obliczenia wst©pne
+1010 AX1=AX1*U: AY1=AY1*(-U): AZ1=AZ1*U
+1020 AXQ=AX1*3.141593/180              ' Zamiana miary stopniowej na ukowĄ
+1030 AYQ=AY1*3.141593/180              ' Dodana linia dla obrotu wok˘ osi OY
+1040 AZQ=AZ1*3.141593/180              ' Dodana linia dla obrotu wok˘ osi OZ
+1050 D1Q=1-COS(AXQ)
+1060 '
+1100 '**************************************************************************
+1110 '* Wprowadzenie maego rysunku ukadu wsp˘rz©dnych w lewym, dolnym rogu  *
+1120 '* ekranu. Aby zmieni† jego wielko†, trzeba zmieni† warto† zmiennej FQ  *
+1130 '* (F jak factor, czynnik) nie zapominajĄc przesunĄ† poczĄtek ukadu      *
+1140 '* wsp˘rz©dnych aby rysunek umieci† w odpowiedniej cz©ci ekranu: zmie- *
+1150 '* ni† warto† XPQ (wsp˘rz©dna X poczĄtku ekranu) i zmieni† warto† YPQ  *
+1160 '* (wsp˘rz©dna Y poczĄtku ukadu) - pierwsza linia pod tym tekstem.      *
+1165 '* Piksel (X,Y)=(0,0) jest w g˘rnym, lewym rogu ekranu.                   *
+1170 '* Linie od 1200 do 1560 wprowadzajĄ dane do tego rysunku.                *
+1180 '* Linie od 1600 do 1650 wprowadzajĄ i wyprowadzajĄ dane spod podprogramu.*
+1190 '* Linie od 1700 do 1910 to procedura rysowania.                          *
+1195 '**************************************************************************
+1200 XPQ=70:YPQ=290:FQ=1.5            ' * tu jednostka to 1.5 piksela
+1210 UX(0)=15:UY(0)=0:UZ(0)=-3
+1220 UX(1)=25:UY(1)=0:UZ(1)=3
+1230 UX(2)=15:UY(2)=0:UZ(2)=3
+1240 UX(3)=25:UY(3)=0:UZ(3)=-3
+1250 UX(4)=10:UY(4)=0:UZ(4)=0
+1260 UX(5)=10:UY(5)=0:UZ(5)=5
+1270 UX(6)=25:UY(6)=0:UZ(6)=5
+1280 UX(7)=25:UY(7)=0:UZ(7)=8
+1290 UX(8)=32:UY(8)=0:UZ(8)=0
+1300 UX(9)=25:UY(9)=0:UZ(9)=-8
+1310 UX(10)=25:UY(10)=0:UZ(10)=-5
+1320 UX(11)=10:UY(11)=0:UZ(11)=-5
+1330 UX(12)=0:UY(12)=15:UZ(12)=0
+1340 UX(13)=0:UY(13)=20:UZ(13)=0
+1350 UX(14)=0:UY(14)=25:UZ(14)=-3
+1360 UX(15)=0:UY(15)=25:UZ(15)=3
+1370 UX(16)=0:UY(16)=10:UZ(16)=0
+1380 UX(17)=0:UY(17)=10:UZ(17)=-5
+1390 UX(18)=0:UY(18)=25:UZ(18)=-5
+1400 UX(19)=0:UY(19)=25:UZ(19)=-8
+1410 UX(20)=0:UY(20)=32:UZ(20)=0
+1420 UX(21)=0:UY(21)=25:UZ(21)=8
+1430 UX(22)=0:UY(22)=25:UZ(22)=5
+1440 UX(23)=0:UY(23)=10:UZ(23)=5
+1450 UX(24)=-3:UY(24)=0:UZ(24)=15
+1460 UX(25)=3:UY(25)=0:UZ(25)=15
+1470 UX(26)=-3:UY(26)=0:UZ(26)=25
+1480 UX(27)=3:UY(27)=0:UZ(27)=25
+1490 UX(28)=0:UY(28)=0:UZ(28)=10
+1500 UX(29)=5:UY(29)=0:UZ(29)=10
+1510 UX(30)=5:UY(30)=0:UZ(30)=25
+1520 UX(31)=8:UY(31)=0:UZ(31)=25
+1530 UX(32)=0:UY(32)=0:UZ(32)=32
+1540 UX(33)=-8:UY(33)=0:UZ(33)=25
+1550 UX(34)=-5:UY(34)=0:UZ(34)=25
+1560 UX(35)=-5:UY(35)=0:UZ(35)=10
+1570 '
+1600 ' Przygotuj tablic© 35-elementowĄ punkt˘w ekranu dla rysunku maego ukadu wsp˘rz©dnych
+1610 FOR I=0 TO 35
+1620   X=UX(I):Y=UY(I):Z=UZ(I)
+1630   GOSUB 10000
+1640   XU(I)=XX:YU(I)=YY
+1650 NEXT I
+1660 '
+1700 ' Rysuj may ukad wsp˘rz©dnych (w dolnym, lewym rogu ekranu)
+1710 LINE(XU(0),YU(0))-(XU(1),YU(1))
+1720 LINE(XU(2),YU(2))-(XU(3),YU(3))
+1730 LINE(XPQ,YPQ)-(XU(4),YU(4))
+1740 LINE -(XU(5),YU(5)):LINE -(XU(6),YU(6))
+1750 LINE -(XU(7),YU(7)):LINE -(XU(8),YU(8))
+1760 LINE -(XU(9),YU(9)):LINE -(XU(10),YU(10))
+1770 LINE -(XU(11),YU(11)):LINE -(XU(4),YU(4))
+1780 LINE(XU(12),YU(12))-(XU(13),YU(13)):LINE -(XU(14),YU(14))
+1790 LINE(XU(13),YU(13))-(XU(15),YU(15))
+1800 LINE(XPQ,YPQ)-(XU(16),YU(16))
+1810 LINE -(XU(17),YU(17)):LINE -(XU(18),YU(18))
+1820 LINE -(XU(19),YU(19)):LINE -(XU(20),YU(20))
+1830 LINE -(XU(21),YU(21)):LINE -(XU(22),YU(22))
+1840 LINE -(XU(23),YU(23)):LINE -(XU(16),YU(16))
+1850 LINE(XU(24),YU(24))-(XU(25),YU(25))
+1860 LINE -(XU(26),YU(26)):LINE -(XU(27),YU(27))
+1870 LINE(XPQ,YPQ)-(XU(28),YU(28))
+1880 LINE -(XU(29),YU(29)):LINE -(XU(30),YU(30))
+1890 LINE -(XU(31),YU(31)):LINE -(XU(32),YU(32))
+1900 LINE -(XU(33),YU(33)):LINE -(XU(34),YU(34))
+1910 LINE -(XU(35),YU(35)):LINE -(XU(28),YU(28))
+1920 '
+2000 '**************************************************************************
+2010 '* Wprowadzenie rysunku ukadu wsp˘rz©dnych w centrum ekranu monitora.   *
+2020 '* Linie od 2060 do 2180 wprowadzajĄ dane do tego rysunku.                *
+2030 '* Linie od 2200 do 2250 wprowadzajĄ i wyprowadzajĄ dane spod podprogramu.*
+2040 '* Linie od 2300 do 2420 to procedura rysowania.                          *
+2050 '**************************************************************************
+2060 XPQ=350:YPQ=175:FQ=1    ' XPQ,YPQ - wsp˘rz©dne rodka ukadu (w pikselach)
+2070 IX(0)=-140:IY(0)=0:IZ(0)=0
+2080 IX(1)=140:IY(1)=0:IZ(1)=0
+2090 IX(2)=130:IY(2)=3:IZ(2)=0
+2100 IX(3)=130:IY(3)=-3:IZ(3)=0
+2110 IX(4)=0:IY(4)=-140:IZ(4)=0
+2120 IX(5)=0:IY(5)=140:IZ(5)=0
+2130 IX(6)=-3:IY(6)=130:IZ(6)=0
+2140 IX(7)=3:IY(7)=130:IZ(7)=0
+2150 IX(8)=0:IY(8)=0:IZ(8)=-140
+2160 IX(9)=0:IY(9)=0:IZ(9)=140
+2170 IX(10)=-3:IY(10)=0:IZ(10)=130
+2180 IX(11)=3:IY(11)=0:IZ(11)=130
+2190 '
+2200 ' Przygotuj tablic© 11-elementowĄ punkt˘w ekranu dla rysunku osi centralnego ukadu wsp˘rz©dnych
+2210 FOR I=0 TO 11
+2220   X=IX(I):Y=IY(I):Z=IZ(I)
+2230   GOSUB 10000
+2240   XI(I)=XX:YI(I)=YY
+2250 NEXT I
+2260 '
+2300 ' Rysuj osie duľego ukadu wsp˘rz©dnych w rodku ekranu
+2310 LINE(XI(0),YI(0))-(XI(1),YI(1)),1:LINE -(XI(2),YI(2)),1
+2320 LINE(XI(1),YI(1))-(XI(3),YI(3)),1
+2330 X=CINT(XI(1)/8)+2:Y=CINT(YI(1)/14)+1
+2340 LOCATE Y,X:PRINT "x"
+2350 LINE(XI(4),YI(4))-(XI(5),YI(5)),2:LINE -(XI(6),YI(6)),2
+2360 LINE(XI(5),YI(5))-(XI(7),YI(7)),2
+2370 X=CINT(XI(5)/8)+2:Y=CINT(YI(5)/14)+1
+2380 LOCATE Y,X:PRINT "y"
+2390 LINE(XI(8),YI(8))-(XI(9),YI(9)),3:LINE -(XI(10),YI(10)),3
+2400 LINE(XI(9),YI(9))-(XI(11),YI(11)),3
+2410 X=CINT(XI(9)/8)+2:Y=CINT(YI(9)/14)+1
+2420 LOCATE Y,X:PRINT "z"
+2430 '
+2500 '**************************************************************************
+2510 '* PoczĄtek procedury podajĄcej na wyjciu wsp˘rz©dne rzeczywiste X,Y,Z. *
+2520 '* Procedura ta ma wywoa† podprogram obliczajĄcy poloľenie poszczeg˘lnych*
+2530 '* punkt˘w na paskim ekranie monitora z wielkociami na wyjciu: XX i YY.*
+2540 '* Wywoanie podprogramu wymaga zastosowania wyraľenia: GOSUB 10000 .     *
+2550 '**************************************************************************
+2560 '*   Przykadowa formua do sporzĄdzenia rysunku.  *
+2570 '*   Przeznaczone sĄ na to linie od 3000 do 4190.  *
+2580 '* Kaľda taka procedura musi podawa† podprogramowi *
+2590 '* warto† zmiennych X, Y i Z jako rzeczywiste     *
+2600 '* wsp˘rz©dne punktu w ukadzie wsp˘rz©dnych,    *
+2610 '* wchodzĄc z tymi nazwami zmiennych do podpro-    *
+2620 '* gramu hasem:  GOSUB 10000  i przyjmowa† na     *
+2630 '* wyjciu z podprogramu zmienne o nazwach XX i YY *
+2640 '* jako wsp˘rz©dne punktu na ekranie w pikselach, *
+2650 '* okresli† co zrobi† z wielkociami XX i YY np.   *
+2660 '* zaznaczy† punkt na ekranie:  PSET(XX,YY)  ,     *
+2670 '* poĄczy† ten punkt z innymi wczeniej zapami©-  *
+2680 '* tanymi lub cokolwiek innego.                    *
+2690 '* Jeľeli usuni©to podprogram rysujĄcy osie ukadu *
+2700 '* to naleľy poda† w pierwszej linii XPQ i YPQ jako*
+2710 '* pozycj© rodka ukadu w pikselach dla SCREEN 9. *
+2720 '* Koniecznie przyjĄ† odpowiedniĄ warto† FQ jako  *
+2730 '* dugo† jednostek trzech osi w pikselach.       *
+2740 '* Akurat FQ jako FQ.W program oblicza sobie sam.  *
+2750 '***************************************************
+3000 FQ=FQ.W    ' tyle pikseli ekranu przypada na jednostk© dugoci i zaleľy od ZASIEG
+3010 ' Rysuj linie wykresu - dla 20-u r˘ľnych wartoci X, r˘wnolegle do paszczyzny XY
+3020 ' K moľe si© sprzyda† aby sprawdzi† czy w og˘le jest jaki rysunek
+3030 BLAD = 0   ' zaraz na wejciu do p©tli zakadam brak matematycznego b©du
+3040 K=0     ' gdy po procesie b©dzie K=0, to znaczy, ľe ľaden punkt nie pojawi si© na ekranie
+3050 FOR Z=-ZASIEG TO ZASIEG STEP KROK
+3055 ' KROK jest obliczony w taki spos˘b, aby dawa 20 r˘ľnych wartoci Z (20 linii)
+3060   RYSUJ = 0  ' To potencjalny punkt startowy linii, wi©c samej linii nie rysujemy
+3070   FOR X=-ZASIEG TO ZASIEG STEP KROK
+3080 '   --- R˘wnanie funkcji Y=f(X,Z) ---
+3090     GOSUB 12000
+3100     IF BLAD = 1 THEN BLAD = 0: RYSUJ = 0: GOTO 3180  ' RUSUJ=0  <-- znaczy: nie rysuj
+3110     Y=Y*SPLASZCZ  ' Spaszcz lub rozciĄgnij wykres wzduľ osi OY
+3120 '   ---------------------------------
+3130     GOSUB 10000
+3140     IF XX<XX.MIN OR XX>XX.MAX OR YY<YY.MIN OR YY>YY.MAX THEN RYSUJ=0: GOTO 3180 ELSE IF RYSUJ=0 THEN RYSUJ=1: GOTO 3170 ' okresl punkt i przygotuj pod rysowanie linii od tego punktu
+3150     K=1     ' wska«nik, ľe obraz wykresu nie jest pusty. Tego juľ nie b©dzie w p©tli poniľej
+3160     LINE-(XX,YY),14:GOTO 3180  ' tu musi by† RYSUJ=1 czyli rysuj kr˘tkĄ lini©
+3170     PSET(XX,YY),14   ' zaznacza punkt od kt˘rego moľe by† rysowana ...
+3180   NEXT X             '  ... kr˘tka linia gdy wczeniej byo RYSUJ=0
+3190 NEXT Z
+4000 '
+4010 ' Rysuj linie poprzeczne do linii juľ narysowanych - r˘wnolegle do paszczyzny ZY
+4030 BLAD = 0   ' zaraz na wejciu do p©tli zakadam brak matematycznego b©du
+4050 FOR X=-ZASIEG TO ZASIEG STEP KROK
+4055 ' KROK jest obliczony w taki spos˘b, aby dawa 20 r˘ľnych wartoci X (20 linii)
+4060   RYSUJ = 0  ' To potencjalny punkt startowy linii, wi©c samej linii nie rysujemy
+4070   FOR Z=-ZASIEG TO ZASIEG STEP KROK
+4080 '   --- R˘wnanie funkcji Y=f(X,Z) ---
+4090   GOSUB 12000
+4100     IF BLAD = 1 THEN BLAD = 0: RYSUJ = 0: GOTO 4180  ' RUSUJ=0  <-- znaczy: nie rysuj
+4110     Y=Y*SPLASZCZ      ' Spaszcz lub rozciĄgnij wykres wzduľ osi OY
+4120 '   ---------------------------------
+4130     GOSUB 10000
+4140     IF XX<XX.MIN OR XX>XX.MAX OR YY<YY.MIN OR YY>YY.MAX THEN RYSUJ=0: GOTO 4180 ELSE IF RYSUJ=0 THEN RYSUJ=1: GOTO 4170 ' okrel punkt i przygotuj pod rysowanie linii od tego punktu
+4160     LINE-(XX,YY),14:GOTO 4180 ' tu musi by† RYSUJ=1 czyli rysuj kr˘tkĄ lini©
+4170     PSET(XX,YY),14   ' zaznacza punkt od kt˘rego moľe by† rysowana ...
+4180   NEXT Z             ' ... kr˘tka linia gdy wczeniej byo RYSUJ=0
+4190 NEXT X
+4200 '
+9000 ' *** Informacja w przypadku braku wykresu dla przyj©tych opcji
+9010 IF K = 0 THEN LOCATE 12,7: PRINT "Nie stwierdzono jakiegokolwiek punktu wykresu dla wybranej funkcji";
+9020 '
+9030 ' *** Zmieä parametry tej samej funkcji - litera [Z] lub [z]
+9040 ' *** lub porzucenie programu - kaľdy inny klawisz
+9050 LOCATE 25,5: PRINT "    [Z] - zmie" CHR$(228) " opcje tego samego wykresu,  [inny klawisz] - wyj" CHR$(152) "cie    ";
+9060 S$=INKEY$: IF S$="" THEN 9060
+9070 IF S$=CHR$(90) OR S$=CHR$(122) THEN LOCATE 24,6: PRINT SPC(66): GOTO 360
+9080 CLS:END
+9090 '
+9100 '
+10000 '*************************************************************************
+10002 '********************** Podprogram - rdzen programu **********************
+10004 '*************************************************************************
+10005 XQ=X:YQ=Y:ZQ=Z
+10010 IF AZQ=0 OR SQR(XQ*XQ+YQ*YQ)<.000001 THEN 10110 '|----------------------|
+10020 AAQ=SQR(XQ*XQ+YQ*YQ)                            '| Linie 10010 do 10100 |
+10030 KZZQ=XQ/AAQ                                     '| dotyczĄ obrotu wok˘ |
+10040 IF KZZQ>=1 THEN KZZQ=0:GOTO 10080               '| osi OZ i wstawione   |
+10050 IF KZZQ<=-1 THEN KZZQ=3.141593:GOTO 10080       '| do programu o nazwie |
+10060 KZZQ=ATN(KZZQ/SQR(1-KZZQ*KZZQ))-1.570796        '| XY. Spowodowao to   |
+10070 IF YQ<0 THEN KZZQ=-KZZQ                         '| przesuni©cie linii   |
+10080 KZZQ=KZZQ+AZQ                                   '| od nr 10010 z pro-   |
+10090 XQ=AAQ*SIN(KZZQ+1.570796)                       '| gramu XY o 100.      |
+10100 YQ=AAQ*COS(KZZQ+1.570796)                       '|----------------------|
+10110 DQ=YQ*D1Q           '* DQ - obniľenie rodka okr©gu po obrocie o kĄt AX *
+10120 YQ=YQ-DQ
+10130 AQ=SQR(XQ*XQ+ZQ*ZQ) '* AQ - rednica obr˘conego okr©gu, dugo† duľej osi
+10140 IF AQ<.0000001 THEN XXQ=XPQ:YRQ=YQ:GOTO 10270
+10150 BQ=AQ*SIN(AXQ)      'fikcyjnej elipsy, BQ - dugo† maej osi tej elipsy *
+10160 KZQ=XQ/AQ           '* PoczĄtek obliczania kĄta pomi©dzy paszczyznĄ YZ
+10170 IF KZQ>=1 THEN KZQ=0:GOTO 10220   ' a p˘losiĄ zawier. punkt (X,Y) elipsy *
+10180 IF KZQ<=-1 THEN KZQ=3.141593:GOTO 10220
+10190 KZQ=ATN(KZQ/SQR(1-KZQ*KZQ))-1.570796   '* KZQ - tu: wyľej wymieniony kĄt *
+10200 IF ZQ>0 THEN KZQ=-KZQ
+10220 IF AYQ=0 THEN XRQ=XQ:GOTO 10250
+10230 KZQ=KZQ+AYQ
+10240 XRQ=AQ*COS(KZQ)
+10250 XXQ=CINT(XPQ+XRQ*KOREKCJA*FQ)   '* XX-pikselowa wsp˘rz©dna X punktu na ekranie*
+10260 YRQ=YQ+BQ*SIN(KZQ)
+10270 YYQ=CINT(YPQ-YRQ*FQ)     '* YY-pikselowa wsp˘rz©dna Y punktu na ekranie*
+10280 XX=XXQ:YY=YYQ       '* KOREKCJA - wsp˘czynnik korygujĄcy zw©ľenie obrazu*
+10300 RETURN                   '* FQ-jednostka trzech osi ukadu w pikselach *
+10310 '
+11000 ' --- Uwagi dotyczĄce wykresu funkcji Y=f(X,Z) ---
+11010 ' Obsuga b©d˘w (ON ERROR GOTO...) nie pracuje w GWBasic'u poprawnie.
+11020 ' Dlatego trzeba uprzedzi† lini© zapisu funkcji warunkami uniemoľliwia-
+11030 ' jĄcymi wejcie do tego zapisu matematycznie niewykonalnych operacji
+11040 ' instrukcjĄ:  IF ( warunek niesprzyjajĄcy) THEN BLAD=1: GOTO 14050
+11050 ' Przykad:
+11060 '  12080 IF (X-2*Z <= 0) THEN BLAD=1: GOTO 14050 ' <-- ignoruj rysowanie
+11070 '  12090 IF (X+LOG(X-2*Z) < 0) THEN BLAD=1: GOTO 14050 ' <-- ignoruj rys.
+11080 '  13000 Y = 2+SQR(X+LOG(X-2*Z))     ' <-- funkcja Y=f(X,Z)
+12000 ' --- R˘wnanie funkcji Y=f(X,Z) ---
+12980 V=-(X*X+Z*Z)       '<-- tu b©dzie zawsze wykonalna matematyczna operacja
+12990 VV=-((X-2)*X+(Z-.5)*Z) '<-- tu b©dzie zawsze wykonalna operacja
+13000 Y=5*EXP(V)-2*EXP(VV) '<-- tu moľe by† niewykonalna matematyczne operacja
+14000 ' ---------------------------------
+14010 ' procedura b©du (niewykonalna matematyczna operacja)
+14020 ON ERROR GOTO 14040
+14030 GOTO 14050
+14040 IF ERL = 13000 THEN BLAD = 1: RESUME 14050
+14050 RETURN
+
