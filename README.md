@@ -6,10 +6,10 @@ Menu explanation: <br>
 1. GWBasic
 &emsp; Installing GW-Basic (PC-Basic) and short description about operations in GW-Basic <br>
 &emsp; (GWBasic - Before you start … .pdf)
-   - ASCII_en.TXT (ASCII - description in English.pdf)
-   - Kalen_en.TXT (Gregorian Calendar … .pdf)
-   - P_ELE_en.TXt (Electrostatic field/Pole elektrostatyczne … .pdf)
-   - XYZ_en.TXT (Three dimensional function … .pdf)
+   - ASCII_en.txt (ASCII - description in English.pdf)
+   - Kalen_en.txt (Gregorian Calendar … .pdf)
+   - P_ELE_en.txt (Electrostatic field/Pole elektrostatyczne … .pdf)
+   - XYZ_en.txt (Three dimensional function … .pdf)
 2. Macierze - Matrices
    - M-1.c and M_2.c (Determinant and the Cramer method … .pdf)
 3. Prezentacje - Mainframe presentations (in Polish only)
@@ -20,9 +20,9 @@ Menu explanation: <br>
    - Programy Narzędziowe.pptx (Utility programs)
    - TSO - edytor.pptx (TSO - editor)
 4. Wykres - Plot <br>
-&emsp; Installing Turbo C++ and Plot.CPP program's description <br>
+&emsp; Installing Turbo C++ and Plot.cpp program's description <br>
 &emsp; (Borland Turbo C++ Installation.pdf)
-   - Plot.CPP (Plot - description in English.pdf)
+   - Plot.cpp (Plot - description in English.pdf)
 
 <br>
 
@@ -53,7 +53,7 @@ Zdaję sobie sprawę, że nie będzie licznego grona wejść na tę stronę inte
 A jednak publikuję tę stronę bo zawsze bezinteresownie dzieliłem się swoją wiedzą. <br><br>
 
 
-Tu znajdziesz linki do ok. 30 pozycji książkowych z zakresu programowania w języku 'C'. Te linki zawarte są w pliku README, na dole tej strony: <br>
+Tu znajdziesz linki do ok. 30 pozycji książkowych z zakresu programowania w języku 'C'. Te linki zawarte są w pliku README.md, na dole tej strony: <br>
 
 [README - lista linków do nauki języka C](https://github.com/Artur1811/poradnik-c/)
 
