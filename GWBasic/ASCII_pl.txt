@@ -1,0 +1,31 @@
+10 KEY OFF
+20 K=32
+30 CLS:PRINT SPC(24) "Leszek Buczek: Kody znak" CHR$(162) "w ASCII"
+40 PRINT SPC(22) STRING$(36,196):PRINT
+50 FOR J=1 TO 5
+60   IF J=1 THEN PRINT SPC(5);
+70   PRINT "  i  "CHR$(179)"znak(i)";
+80   IF J<5 THEN PRINT CHR$(186);
+90 NEXT J
+95 PRINT
+100 FOR J=1 TO 5
+110   IF J=1 THEN PRINT SPC(5)
+120   PRINT STRING$(5,196) CHR$(197) STRING$(7,196);
+130   IF J<5 THEN PRINT CHR$(206);
+140 NEXT J
+145 PRINT
+150 M=0:L=0:N=1        '** M - skladnik skoku o M spacji do nastepnej kolumny **
+160 FOR I=K TO 255     '** N - licznik kolumny (1..5) **
+170   L=L+1            '** L - licznik szeregu (1..17) **
+180   IF I<100 THEN A=1 ELSE A=0
+190   LOCATE 5+L,6+A+M:PRINT I CHR$(179) SPC(3) CHR$(I) SPC(3)
+200   IF N<5 THEN PRINT CHR$(186)
+210   IF (I-K+1)/17=INT((I-K+1)/17) AND I<210 THEN M=M+14:N=N+1:L=0
+220   IF N>5 THEN K=I+1: PRINT: PRINT: PRINT "                       Naci"CHR$(152)"nij [Enter] aby kontynuowa"CHR$(134);:INPUT " ",A$: IF A$=CHR$(13) THEN END ELSE GOTO 30
+230   IF I=212 OR I=223 OR I=234 OR I=245 THEN M=M+14:N=N+1:L=0
+240 NEXT I
+250 LOCATE 19,5
+260 PRINT "Naci" CHR$(152) "nij [W] aby wyj" CHR$(152) CHR$(134) " z programu albo [Enter] aby powt" CHR$(162) "rzy" CHR$(134) " tabel" CHR$(169) " ASCII "
+270 B$=INKEY$:IF B$="" THEN 270
+280 IF B$=CHR$(87) OR B$=CHR$(119) THEN CLS: END ELSE GOTO 20
+
