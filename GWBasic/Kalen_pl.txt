@@ -1,0 +1,161 @@
+2 '****************************************************************
+3 '*            Kalendarz Gregorianski, wersja polska             *
+4 '****************************************************************
+10 KEY OFF
+20 SCREEN 0: CLS
+30 PALETTE 0,3: COLOR 1,,3
+40 PRINT: PRINT: PRINT: PRINT SPC(29) "Kalendarz Gregoria" CHR$(228) "ski"
+50 PRINT SPC(31) "dowolnego miesi" CHR$(165) "ca"
+60 COLOR 8
+70 PRINT: PRINT SPC(29) "Miesi" CHR$(165) "c (1..12) :";: INPUT " ",M$
+80 IF M$="" THEN R=1: GOTO 100 ELSE R=0: M=VAL(M$): SKOK=29
+90 IF(M<1)OR(M>12)OR(M<>INT(M)) THEN 70
+100 PRINT SPC(29) "Rok (od 1582)   :";: INPUT " ",Y
+110 IF Y<1582 OR Y>4000 OR (Y<>INT(Y)) THEN 100
+120 PRINT: PRINT
+130 A$="0336146250351"      'Dla roku nieprzestepnego; ponizej jest dla roku przestepnego
+140 IF(Y=4*INT(Y/4)AND NOT(Y=100*INT(Y/100)))OR(Y=400*INT(Y/400)) THEN A$="0340250361462"
+150 W1=Y+INT((Y-1)/4)-INT((Y-1)/100)+INT((Y-1)/400)  'Zmienna pomocnicza dla pozycji dnia
+160 IF R=0 THEN 240
+170 SC=1
+180 CLS: COLOR 4: PRINT: PRINT SPC(38) Y: Q$=SPACE$(17)
+190 IF SC<>1 THEN M=6 ELSE M=0
+200 FOR MP=1 TO 6
+210   M=M+1: LR=0
+220   IF (M>3 AND M<7) OR M>9 THEN KK=MP-3: KR=16 ELSE KK=MP: KR=6
+230   SKOK=-21+KK*26
+240   A=28: B=0
+250   IF VAL(MID$(A$,M,1))>VAL(MID$(A$,M+1,1)) THEN B=7
+260   W=W1+VAL(MID$(A$,M,1))
+265   W=W+6       'Dla polaskiego kalendarza aby poniedzialek byl pierwszym dniem
+270   W=W-7*INT(W/7)      ' W = (0..6) czyli od poniedzialku (0) do niedzieli (6)
+280   COLOR 14
+290   IF R=0 THEN 370
+300   LOCATE KR-2,9
+310   IF M=1 THEN PRINT "  Stycze"CHR$(228);Q$;"    Luty";Q$;"    Marzec": GOTO 350
+320   IF M=4 THEN PRINT "  Kwiecie"CHR$(228);Q$;"   Maj   ";Q$;" Czerwiec": GOTO 350
+330   IF M=7 THEN PRINT "   Lipiec ";Q$;" Sierpie"CHR$(228);Q$;" Wrzesie"CHR$(228): GOTO 350
+340   IF M=10 THEN PRINT "Pa"CHR$(171)"dziernik";Q$;"Listopad";Q$;" Grudzie"CHR$(228)
+350   COLOR 5: LOCATE KR-1,SKOK: PRINT "Po Wt "CHR$(151)"r Cz Pi So Ni"
+360   GOTO 400
+370   IF M<10 THEN PRINT SPC(29) M SPC(13) Y: GOTO 390
+380   PRINT SPC(29) M SPC(12) Y
+390   PRINT: PRINT SPC(30) "Po Wt "CHR$(151)"r Cz Pi So Ni": PRINT
+400   L=A+VAL(MID$(A$,M+1,1))-VAL(MID$(A$,M,1))+B      ' L - ilosc dni w miesiacu
+410   X$=SPACE$(W*3)
+420   FOR I=1 TO L                     ' Wypisz po kolei wszystkie dni w miesiacu
+430     I$=STR$(I)
+440     IF W=6 THEN COLOR 4 ELSE COLOR 11         ' Niedziela kolorem czerwonym (4)
+450     IF I=1 THEN IF R=1 THEN LOCATE KR,SKOK-1:PRINT X$;:ELSE PRINT SPC(SKOK) X$;
+460     IF I<10 THEN PRINT CHR$(32)+I$;ELSE PRINT I$;
+470     W=W+1
+480     IF W=7 THEN IF R=1 THEN W=0: LR=LR+1: LOCATE KR+LR,SKOK-1 ELSE W=0: PRINT CHR$(13) SPC(SKOK);
+490   NEXT I
+500   IF R=0 GOTO 600
+510   IF M<>6 AND M<>12 THEN 590
+520   IF M=6 THEN LOCATE 25,2: COLOR 1,7: PRINT SPC(11) "Przyci"CHR$(152)"nij dowolny klawisz aby zobaczy"CHR$(134)" nast"CHR$(169)"pne p"CHR$(162)CHR$(136)"rocze" SPC(10): GOTO 540
+530   LOCATE 25,1: COLOR 1,7: PRINT " [Q] - wyj"CHR$(152)"cie, [SPACJA] - pierwsza strona, [inny klawisz] - rozpocznij od nowa ";
+540   S$=INKEY$: IF S$="" THEN 540
+550   IF SC=1 THEN SC=2: COLOR 1,3,3: GOTO 180
+560   IF S$=CHR$(81) OR S$=CHR$(113) THEN 640
+570   IF S$=CHR$(32) THEN COLOR 1,3,3: GOTO 170
+580   COLOR 1,3,3: GOTO 20
+590 NEXT MP
+600 LOCATE 25,1: COLOR 1,7: PRINT " [Q] - wyj"CHR$(152)"cie z programu,  [inny dowolny klawisz] - ponownie wywo"CHR$(136)"aj kalendarz ";
+610 S$=INKEY$: IF S$="" THEN 610
+620 IF S$=CHR$(81) OR S$=CHR$(113) THEN 640
+630 COLOR 1,3,3: GOTO 20
+640 SCREEN 9: CLS
+1000 '|------------------------------------------------------------------------|
+1001 '|                                                                        |
+1002 '|              Gunter Dietmar Roth - Astronomy: a handbook               |
+1003 '|                        Springer-Verlag, 1975                           |
+1004 '|                                                                        |
+1005 '|     Chapter 6. Karl Schutte - Fundamentals of Spherical Astronomy      |
+1006 '|                                                                        |
+1007 '| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+1008 '|                                                                        |
+1009 '| ...and Pope Gregory XIII (1572-1585) decreed by a Bull of 24 February  |
+1010 '| 1581 that:                                                             |
+1011 '| 1. The day following 4 October 1582 should have the date 15 October    |
+1012 '|    1582 (in order to restore the beginning of spring to 21 March).     |
+1013 '| 2. All years that are divisible by 4 should be leap years of 366 days, |
+1014 '|    except those which coincide with the beginning of a century;        |
+1015 '|    the latter are leap years only if they are divisible by 400. (Thus  |
+1016 '|    1400, 1800, and 1900 are not leap years, while 1600 and 2000 are.)  |
+1017 '|                                                                        |
+1018 '|   This calendar, called Gregorian Calendar, therefore has (within each |
+1019 '| cycle of 400 years) three leap days fewer than the Julian Calendar,    |
+1020 '| and we have that the length of the mean Gregorian years is 365.2425    |
+1021 '| days; the length of the tropical years is 365.2422 days.               |
+1022 '|   The difference of 0.0003 days equals 26seconds, adds up to one day   |
+1023 '| only after 3000 years:                                                 |
+1024 '|                                                                        |
+1025 '|       The way the years are now usualy numbered was proposed by the    |
+1026 '|     Roman Abbot Dionysius Exiguus (in about 525 A.D.). He made         |
+1027 '|     an error in fixing the first year, as it appears that Christ was   |
+1028 '|     probably born seven years ealier than the date given by Exiguus.   |
+1029 '|       Later the years before the beginning of the Christian era were   |
+1030 '|     numbered continuously, but allowance was not made for the fact     |
+1031 '|     that between the year 1 A.D. and the year 1 B.C. there should      |
+1032 '|     have been a year with the number zero. For this reason there are   |
+1033 '|     differences between historical and astronomical numbering of years.|
+1034 '|     There is, for instance:                                            |
+1035 '|                 1959 A.D. (historical) = +1959 (astronomical)          |
+1036 '|                    1 B.C. (historical) =     0 (astronomical)          |
+1037 '|                  300 B.C. (historical) =  -299 (astronomical)          |
+1038 '|                                                                        |
+1039 '|------------------------------------------------------------------------|
+1040 '|                                                                        |
+1041 '|                     Baker and Frederick - Astronomy                    |
+1042 '|                                                                        |
+1043 '| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+1044 '|                                                                        |
+1045 '|                                Easter                                  |
+1046 '|                                                                        |
+1047 '|   Easter is the first Sunday after the 14th day ecclesiastical moon    |
+1048 '| (nearly the full moon) that accurs on or immediately after March 21.   |
+1049 '| Thus if the 14th day of the moon occurs on Sunday, Easter is observed  |
+1050 '| one week later. Unlike Christmas, Easter is a moveable feast because   |
+1051 '| it depends on the moon's phases; its date can range from March 22 to   |
+1052 '| April 25 and in the epoch year of 2000 it will fall on April 23.       |
+1053 '|   There is some interest expressed by church authorities to make       |
+1054 '| Easter a fixed holiday, a view that is enthusiastically supported by   |
+1055 '| businessmen. It would almost be a pity to lose the variety that the    |
+1056 '| moving of the Easter gains, a reason perhaps behind the general        |
+1057 '| resistance to calendar reform as well.                                 |
+1058 '|                                                                        |
+1059 '|                         Dates of Easter Sunday                         |
+1060 '|    1970 March 29            1980 April  6             1990 April 15    |
+1061 '|    1971 April 11            1981 April 19             1991 March 31    |
+1062 '|    1972 April  2            1982 April 11             1992 April 19    |
+1063 '|    1973 April 22            1983 April  3             1993 April 11    |
+1064 '|    1974 April 14            1984 April 22             1994 April  3    |
+1065 '|    1975 March 30            1985 April  7             1995 April 16    |
+1066 '|    1976 April 18            1986 March 30             1996 April  7    |
+1067 '|    1977 April 10            1987 April 19             1997 March 30    |
+1068 '|    1978 March 26            1988 April  3             1998 April 12    |
+1069 '|    1979 April 15            1989 March 26             1999 April  4    |
+1070 '|                                                                        |
+1071 '|       https://tlarsen2.tripod.com/thomaslarsen/easterdates.html        |
+1072 '|    2000 April 23            2010 April  4             2020 April 12    |
+1073 '|    2001 April 15            2011 April 24             2021 April  4    |
+1074 '|    2002 March 31            2012 April  8             2022 April 17    |
+1075 '|    2003 April 20            2013 March 31             2023 April  9    |
+1076 '|    2004 April 11            2014 April 20             2024 March 31    |
+1077 '|    2005 March 27            2015 April  5             2025 April 20    |
+1078 '|    2006 April 16            2016 March 27             2026 April  5    |
+1079 '|    2007 April  8            2017 April 16             2027 March 28    |
+1080 '|    2008 March 23            2018 April  1             2028 April 16    |
+1081 '|    2009 April 12            2019 April 21             2029 April  1    |
+1082 '|                                                                        |
+1083 '|    2030 April 21            2035 March 25                              |
+1084 '|    2031 April 13            2036 April 13                              |
+1085 '|    2032 March 28            2037 April  5                              |
+1086 '|    2033 April 17            2038 April 25                              |
+1087 '|    2034 April  9            2039 April 10                              |
+1088 '|                                                                        |
+1089 '|------------------------------------------------------------------------|
+1090 '
+1091 '                           --- end of file ---
+
