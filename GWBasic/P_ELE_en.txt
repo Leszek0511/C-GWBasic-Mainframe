@@ -1,0 +1,335 @@
+10 '**************************************************************************
+20 '*   Pole elektrostatyczne na plaszczyznie co najwyzej dwoch ladunkow     *
+30 '*   Program to realizujacy to linie od numeru 2000 do konca programu     *
+40 '*------------------------------------------------------------------------*
+50 '*  XPQ i YPQ - wspolrzedne srodka ekranu (ukladu)                        *
+60 '*  FQ - dlugosc jednostki wszystkich osi w pikselach (w pikselach)       *
+70 '*  Dla "SCREEN 9" srodek ekranu to XPQ=320, YPQ=175                      *
+80 '*                 FQ w granicach od 20 do 80                             *
+90 '**************************************************************************
+100 KEY OFF
+110 SCREEN 9
+120 CLS
+130 DIM X1P(25), Y1P(25), X2P(25), Y2P(25)
+140 DIM XX1P(25), YY1P(25), XX2P(25), YY2P(25)
+150 '* 1.2 to wspolczynnik korygujacy zwezenie obrazu
+160 '* FQ=26 to skala: 1 cm na ekranie to 26 pikseli na ekranie monitora
+170 XPQ=320: YPQ=210*1.2: FQ=26 'XPQ,YPQ-wspolrzedne srodka ukladu
+180 COLOR 15,0: LOCATE 1,28: PRINT "Leszek Buczek, May 3, 2015";
+190 COLOR 7,0: LOCATE 2,28: PRINT "Electrostatic field lines";
+300 ' **********  Wprowadzenie danych dla ladunku pierwszego  **********
+310 F=0: COLOR 15,0: LOCATE 4,4: PRINT "First electric charge  [+,-,0] ": LOCATE 4,35: PRINT CHR$(95): ZNAK1$=INPUT$(1)
+320 IF ZNAK1$=CHR$(13) THEN GOTO 310
+330 IF ZNAK1$<>CHR$(43) AND ZNAK1$<>CHR$(45) AND ZNAK1$<>CHR$(48) THEN F=1
+340 IF F=1 THEN LOCATE 5,10: PRINT ZNAK1$ " ?  Enter one of three characters: + or - or 0"
+350 IF F=1 THEN LOCATE 4,34: PRINT SPC(2): GOTO 310 ELSE LOCATE 5,10: PRINT SPC(47): LOCATE 4,35: PRINT ZNAK1$
+360 IF ZNAK1$=CHR$(43) THEN KOL1O=4 ELSE IF ZNAK1$=CHR$(45) THEN KOL1O=1 ELSE KOL1O=7
+370 CIRCLE(300,48),4,KOL1O
+380 PAINT (300,48),KOL1O
+390 IF ZNAK1$=CHR$(48) THEN L1=0: GOTO 510
+400 F=0: LOCATE 4,46: PRINT "Electric charge value, Q [1-5] ": LOCATE 4,77: PRINT CHR$(95): LAD1$=INPUT$(1)
+410 IF LAD1$=CHR$(13) THEN GOTO 400
+420 IF LAD1$<>"1" AND LAD1$<>"2" AND LAD1$<>"3" AND LAD1$<>"4" AND LAD1$<>"5" THEN F=1
+430 IF F=1 THEN LOCATE 5,10: PRINT LAD1$ " ?  Enter a charge value as one of the digits: 1, 2, 3, 4 or 5"
+440 IF F=1 THEN LOCATE 4,70: PRINT SPC(2): GOTO 400 ELSE LOCATE 5,10: PRINT SPC(68): LOCATE 4,77: PRINT LAD1$
+450 L1=VAL(LAD1$)
+500 ' **********  Wprowadzenie danych dla ladunku drugiego  **********
+510 F=0: LOCATE 5,4: PRINT "Second electric charge [+,-,0] ": LOCATE 5,35: PRINT CHR$(95): ZNAK2$=INPUT$(1)
+520 IF ZNAK2$=CHR$(13) THEN GOTO 510
+530 IF ZNAK2$<>CHR$(43) AND ZNAK2$<>CHR$(45) AND ZNAK2$<>CHR$(48) THEN F=1
+540 IF F=1 THEN LOCATE 6,10: PRINT ZNAK2$ " ?  Enter one of three characters: + or - or 0": LOCATE 5,34: PRINT SPC(2): GOTO 510 ELSE LOCATE 6,10: PRINT SPC(47): LOCATE 5,35: PRINT ZNAK2$
+560 IF ZNAK2$=CHR$(43) THEN KOL2O=4 ELSE IF ZNAK2$=CHR$(45) THEN KOL2O=1 ELSE KOL2O=7
+570 CIRCLE(300,62),4,KOL2O
+580 PAINT (300,62),KOL2O
+590 IF ZNAK2$=CHR$(48) THEN L2=0: GOTO 710
+600 F=0: LOCATE 5,46: PRINT "Electric charge value, Q [1-5] ": LOCATE 5,77: PRINT CHR$(95): LAD2$=INPUT$(1)
+610 IF LAD2$=CHR$(13) THEN GOTO 600
+620 IF LAD2$<>"1" AND LAD2$<>"2" AND LAD2$<>"3" AND LAD2$<>"4" AND LAD2$<>"5" THEN F=1
+630 IF F=1 THEN LOCATE 6,10: PRINT LAD2$ " ?  Enter a charge value as one of the digits: 1, 2, 3, 4 or 5"
+640 IF F=1 THEN LOCATE 5,70: PRINT SPC(2): GOTO 600 ELSE LOCATE 6,10: PRINT SPC(68): LOCATE 5,77: PRINT LAD2$
+650 L2=VAL(LAD2$)
+700 ' **********  Wprowadzenie odleglosci pomiedzy dwoma ladunkami  **********
+710 LOCATE 6,15: PRINT "Distance between charges in centimeters [1-14]": LOCATE 6,62: PRINT CHR$(95)
+720 P=0: I=0: ODL$="": V$=""
+730 WHILE (V$<>CHR$(13) AND I<6)
+740   V$=INPUT$(1): I=I+1: LOCATE 7,10: PRINT SPC(68)
+750   LOCATE 6,61: PRINT SPC(1): LOCATE 6,61+I: PRINT V$ CHR$(95): F=0
+760   IF V$<>"0" AND V$<>"1" AND V$<>"2" AND V$<>"3" AND V$<>"4" AND V$<>"5" AND V$<>"6" AND V$<>"7" AND V$<>"8" AND V$<>"9" AND V$<>"." THEN F=1
+770   IF F=1 THEN LOCATE 7,1: PRINT SPC(78): LOCATE 7,10: PRINT "Enter either a digit or decimal point": I=I-1: LOCATE 6,62+I: PRINT CHR$(95) SPC(2): GOTO 810
+780   IF V$="." THEN P=P+1               '* count dots
+790   IF P>1 THEN LOCATE 7,1: PRINT SPC(78): LOCATE 7,10: PRINT "There can only be 1 decimal point in a number": I=I-1: P=P-1: LOCATE 6,62+I: PRINT CHR$(95) SPC(2): GOTO 810
+800   ODL$=ODL$+V$
+810 WEND
+820 LOCATE 8,61+I: PRINT SPC(3)
+830 ODLEG=VAL(ODL$)
+840 IF ODLEG<1 OR ODLEG>14 THEN LOCATE 7,10: PRINT "Enter a value of a distance between charges as a number from 1 to 14"
+850 IF ODLEG<1 OR ODLEG>14 THEN LOCATE 6,61: PRINT SPC(6): GOTO 710
+860 LOCATE 7,1: PRINT SPC(75)
+900 ' **********  Pozycjonowanie i rysowanie ladunku pierwszego  **********
+910 '*  Ustalenie pozycji  x-owej pierwszego ladunku: y-kowa jest rowna 0
+920 XPOZ1=XPQ-ODLEG*FQ/2
+930 '*  Rysuj ladunek pierwszy (po lewej stronie ekranu)
+940 CIRCLE(XPOZ1,YPQ/1.2),4,KOL1O     '* Rysuj 1-y ladunek o promieniu 4 pikseli
+950 PAINT (XPOZ1,YPQ/1.2),KOL1O       '* Maluj 1-y ladunek tym samym kolorem
+1000 ' **********  Pozycjonowanie i rysowanie ladunku drugiego  **********
+1010 '*  Ustalenie pozycji x-owej drugiego ladunku; y-kowa jest rowna 0
+1020 XPOZ2=XPQ+ODLEG*FQ/2
+1030 '*  Rysuj ladunek drugi (po prawej stronie ekranu)
+1040 CIRCLE(XPOZ2,YPQ/1.2),4,KOL2O    '* Rysuj 2-gi ladunek o promieniu 4 pikseli
+1050 PAINT (XPOZ2,YPQ/1.2),KOL2O      '* Maluj 2-gi ladunek tym samym kolorem
+1100 '*  Ustalenie maksymalnych i minimalnych rysowanych wartosci X i Y - piksele ekranu
+1110 MINX=40: MAXX=600: MINY=100: MAXY=320
+1200 '***************************************************************************
+1210 '* Ustawienie poczatkowych punktow dla wykreslanych linii tuz przy
+1220 '* rysunkach ladunkow. Ich ilosc jest nastepujaca:
+1230 '* Dla wartosci ladunku = 1, wyprowadzanych jest 5 linii
+1240 '* Dla innej wartosci ladunku, wyprowadzanych jest 5 x wartosc ladunku
+1300 '***************************************************************************
+1310 '*      Wszystkie obliczane tu wielkosci dotycza strefy realnej
+1320 '*   Dopiero procedura od numeru 10000 zamienia je na punkty ekranu
+1400 '*********************** -- Ladunek pierwszy -- ****************************
+1410 IF L1=0 THEN ILOSCL1=0: GOTO 1700
+1420 XPOZ1R= -ODLEG/2: YPOZ1R=0       '* Pozycja srodka ladunku pierwszego
+1430 R=.2                '* Promien okregu na ktorym zaczynaja sie rysunki linii
+1440 X1P(1)= XPOZ1R + R               '* Pozycja x-owa 1-go punktu wokol ladunku
+1450 Y1P(1)= 0                        '* Pozycja y-owa 1-go punktu wokol ladunku
+1460 X=X1P(1): Y=Y1P(1) '* Przygotuj punkt do wejscia do podprogramu
+1470 GOSUB 10000
+1480 XX1P(1)=XX: YY1P(1)=YY
+1490 ILOSCL1=L1*5             '* Ilosc linii wychodzacych z ladunku pierwszego
+1500 '*- Te linie trzeba rozlozyc rownomiernie na okregu o promieniu R
+1510 KATL1=360/ILOSCL1        '* Kat w stopniach do nastepnego punktu
+1520 '- Jeden stopien to 0.017453 radiana, wiec...
+1530 FOR I=2 TO ILOSCL1       '* Ustalamy pozycje nastepnych punktow na okregu R
+1540   X1P(I)= XPOZ1R + R*COS(.017453*KATL1*(I-1))
+1550   Y1P(I)= R*SIN(.017453*KATL1*(I-1))
+1560   X=X1P(I): Y=Y1P(I)
+1570   GOSUB 10000
+1580   XX1P(I)=XX: YY1P(I)=YY          '* Wspolrzedne poczatkow linii na ekranie
+1590 NEXT I
+1700 '************************* -- Ladunek drugi -- *****************************
+1710 IF L2=0 THEN ILOSCL2=0: GOTO 2000      '* Ladunek zerowy czyli brak ladunku
+1720 XPOZ2R= ODLEG/2: YPOZ2R=0       '* Pozycja srodka ladunku drugiego
+1730 R=.2               '* Promien okregu na ktorym zaczynaja sie rysunki linii
+1740 X2P(1)= XPOZ2R - R               '* Pozycja x-owa 1-go punktu wokol ladunku
+1750 Y2P(1)= 0                        '* Pozycja y-owa 1-go punktu wokol ladunku
+1760 X=X2P(1): Y=Y2P(1) '* Przygotuj punkt do wejscia do podprogramu
+1770 GOSUB 10000
+1780 XX2P(1)=XX: YY2P(1)=YY           '* Wspolrzedne poczatkow linii na ekranie
+1790 ILOSCL2=L2*5       '* Ilosc linii wychodzacych z ladunku drugiego
+1800 '*- Te linie trzeba rozlozyc rownomiernie na okregu o promieniu R
+1810 KATL2=360/ILOSCL2  '* Kat w stopniach do nastepnego punktu
+1820 '- Jeden stopien to 0.017453 radiana, wiec...
+1830 FOR I=2 TO ILOSCL2 '* Ustalamy pozycje nastepnych punktow na okregu R
+1840   X2P(I)= XPOZ2R - R*COS(.017453*KATL2*(I-1))
+1850   Y2P(I)= R*SIN(.017453*KATL2*(I-1))
+1860   X=X2P(I): Y=Y2P(I)
+1870   GOSUB 10000
+1880   XX2P(I)=XX: YY2P(I)=YY         '* Wspolrzedne poczatkow linii na ekranie
+1890 NEXT I
+2000 '**************************************************************************
+2010 '* Poczatek procedury podajacej na wyjsciu wspolrzedne rzeczywiste X i Y. *
+2020 '* Procedura ta ma wywolac podprogram obliczajacy polozenie poszczegolnych*
+2030 '* punktow na plaskim ekranie monitora z wielkosciami na wyjsciu: XX i YY.*
+2040 '**************************************************************************
+2050 LOCATE 25,18: PRINT "Press any key to view electrostatic field lines"
+2060 S$=INKEY$: IF S$="" THEN 2060
+2070 LOCATE 25,18: PRINT SPC(47)                        '* Wymaz powyzsze zdanie
+2080 '-------------------------------------------------------------------------'
+2090 '             Parametry uzyte do uzyskania obrazu graficznego             '
+2100 '                                                                         '
+2110 ' J - numer punktu, od ktorego zaczyna sie linia. Zastepuje poprzednie I  '
+2120 '     Pierwszy punkt to (znak ? zastepuje cyfry 1 i 2):                   '
+2130 '     J=1 w przypadku, gdy drugi ladunek jest neutralny.  Oznacza to, ze  '
+2140 '         wszystkie linie w liczbie Wartosc Ladunku (LAD?$)=ILOSCL?*5     '
+2150 '         beda wykreslane tylko wtedy, gdy drugi ladunek jest neutralny.  '
+2160 '     J=2 w przypadku, gdy obydwa ladunki sa albo tego samego znaku, albo '
+2170 '         znaku przeciwnego do siebie.  Oznacza to, ze pierwsza linia dla '
+2180 '         obu ladunkow nie bedzie wykreslana a sa one dla obu ladunkow    '
+2190 '         naprzeciwko siebie.  Upraszcza to programowanie a jednoczesnie  '
+2200 '         pozostawia obraz latwiejszy do zrozumienia idei linii pola.     '
+2210 '                                                                         '
+2220 ' Przypadki (istotne dla celu kodowania programu):                        '
+2230 '     PRZYP=1 - 1-szy ladunek jest zerowy/neutralny.  Dla tego przypadku  '
+2240 '               wspolrzedne natezenia pola pochodzacego od tego ladunku   '
+2250 '               sa wyzerowane: J dla drugiego ladunku jest 1.             '
+2260 '     PRZYP=2 - 2-gi ladunek jest zerowy/neutralny.  Dla tego przypadku   '
+2270 '               wspolrzedne natezenia pola pochodzacego od tego ladunku   '
+2280 '               sa wyzerowane: J dla pierwszego ladunku jest 1.           '
+2290 '     PRZYP=3 - 1-y i 2-gi ladunek sa przeciwnych znakow.  Dla tego przy- '
+2300 '               padku od czerwonego ladunku (+) wychodza jasnoczerwone    '
+2310 '               linie a od niebieskiego (-) linie jasnoniebieskie.        '
+2320 '               Poczatkowo J=2 co oznacza pierwsza kreslona linia nie na- '
+2330 '               przeciwko ladunku drugiego.  Teoretycznie sila dzialajaca '
+2340 '               na ladunek probny jest od + i do -.  W praktyce kodowania '
+2350 '               przyjeto zwrot sily od pierwszego do drugiego ladunku     '
+2360 '               obojetnie jaki by nie byl pierwszy (+ czy -) i drugi ladu-'
+2370 '               nek.  W koncu kierunek dzialania sil jest umowny.  Wobec  '
+2380 '               tego, zwrot wektora sily pochodzacej od ladunku drugiego  '
+2390 '               jest przeciwny (K=-1).                                    '
+2400 '     PRZYP=4 - 1-y i 2-gi ladunek sa takiego samego znaku.  Dla tego     '
+2410 '               przypadku linie pola sa tego samego koloru (cjanowy).     '
+2420 '               Poczatkowe J=2 co oznacza pierwsza kreslona linie nie na- '
+2430 '               przeciwko ladunku drugiego.  Rownie dobrze moglo byc J=1. '
+2440 '               Zwrot wektora sily pochodzacej od ladunku drugiego jest   '
+2450 '               taki sam jak ladunku pierwszego: K=1.                     '
+2460 '                                                                         '
+2470 ' K - zwrot wektora sily pochodzacej od ladunku drugiego:                 '
+2480 '     K=1 - dla ladunku drugiego gdy on jest tego samego znaku co pierwszy'
+2490 '     K=-1 - dla ladunku drugiego gdy on jest innego znaku co pierwszy.   '
+2500 '                                                                         '
+2510 ' Poczatkowe punkty wykreslanych linii wyznaczone sa przez:               '
+2520 '     X1P(J) i Y1P(J) - rzeczywiste wspolrzedne tuz przy ladunku.         '
+2530 '     XX1P(J) i YY1P(J) - wspolrzedne obrazu na ekranie tuz przy ladunku. '
+2540 '     Wspolrzedne nastepnych punktow nie sa juz tablicowane bo nie musza  '
+2550 '     byc zapamietywane: punkt koncowy staje sie punktem poczatkowym.     '
+2560 '                                                                         '
+2570 ' Koncowe punkty wykreslanych linii wyznaczone sa przez:                  '
+2580 '        Okno graficzne dla wykreslanych linii (MINX, MAXX, MINY i MAXY): '
+2590 '         MINX - minimalna wartosc X okna graficznego w pikselach ekranu  '
+2600 '         MAXX - maksymalna wartosc X okna graficznego w pikselach ekranu '
+2610 '         MINY - minimalna wartosc Y okna graficznego w pikselach ekranu  '
+2620 '         MAXY - maksymalna wartosc Y okna graficznego w pikselach ekranu '
+2630 '     Zblizenie linii do przeciwnego ladunku na odleglosc nie mniejsza    '
+2640 '     niz R, gdzie R jest promieniem okregow na ktorych zaczynaja sie     '
+2650 '     linie przeciwnego ladunku (a wiec takze koncza roboczego ladunku).  '
+2660 '                                                                         '
+2670 ' SKALA - Skala stala dla wszystkich wspolrzednych obu sil - ustalona na  '
+2680 '         bazie doswiadczenia.                                            '
+2690 '-------------------------------------------------------------------------'
+2700 SKALA=100    '* Im SKALA wieksza tym lepsza ale za bardzo spowalnia rysunek
+2800 '-------------------------------------------------------------------------'
+2810 '           Wyznaczenie warunkow wstepnych dla grafiki linii              '
+2820 '*************************************************************************'
+2830 IF ZNAK1$=CHR$(48) THEN PRZYP=1: J=1: GOTO 4000 '* Rysuj linie ladunku 2-go
+2840 IF ZNAK2$=CHR$(48) THEN PRZYP=2: J=1: GOTO 3030 '* Rysuj linie ladunku 1-go
+2850 IF (ZNAK1$=CHR$(43) AND ZNAK2$=CHR$(45)) OR (ZNAK1$=CHR$(45) AND ZNAK2$=CHR$(43)) THEN PRZYP=3: K=-1: KOLOR=11: J=2: GOTO 3030  '* Rysuj linie ladunku 1-go
+2860 IF (ZNAK1$=CHR$(43) AND ZNAK2$=CHR$(43)) OR (ZNAK1$=CHR$(45) AND ZNAK2$=CHR$(45)) THEN PRZYP=4: K=1: J=2: GOTO 3030             '* Rysuj linie ladunku 1-go
+3000 '-------------------------------------------------------------------------'
+3010 '                Rysowanie linii dla ladunku pierwszego                   '
+3020 '-------------------------------------------------------------------------'
+3030 FOR M=J TO ILOSCL1
+3040   X1PL=X1P(M): Y1PL=Y1P(M)
+3050   XX=XX1P(M): YY=YY1P(M)-14
+3060   IF PRZYP<>3 THEN IF ZNAK1$=CHR$(43) THEN KOLOR=5 ELSE KOLOR=2
+3070   RYSUJ=1
+3080   PSET(XX,YY),KOLOR          '* Ustaw pioro i kolor na punkcie poczatkowym
+3090   WHILE RYSUJ       '* RYSUJ=0 znaczy 'nie rysuj';  RYSUJ=1 znaczy 'rysuj'
+3100     IF PRZYP=2 THEN F2X=0: F2Y=0: GOTO 3270
+3110     '---------------------------------------------------------------------
+3120     ' Obliczanie wplywu ladunku 2-go na ladunek probny
+3130     '  Obliczanie odleglosci pomiedzy ladunkiem 2-gim a ladunkiem probnym
+3140     '   RX - odleglosc wspolrzednej X pomiedzy ladunkiem 2-gim i probnym
+3150     '   RY - odleglosc wspolrzednej Y pomiedzy ladunkiem 2-gim i probnym
+3160     RX=X1PL-XPOZ2R '* x-owa srodka ladunku 2-go jest zawsze dodatnia
+3170     RY=Y1PL        '*YPOZ2R=0 wiec RY=Y1PL a jego kwadrat zawsze nieujemny
+3180     R2=SQR(RX^2+RY^2)
+3190     ' Obliczanie sily dzialajacej na ladunek probny ze strony ladunku 2-go
+3200     '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+3210     ' R2 nigdy nie bedzie rowna 0 bo punkt ladunku probnego nigdy nie
+3220     '    osiagnie srodka ladunku 2-go.
+3230     ' Granicami sa XPOZ2R+R, XPOZ2R-R, YPOZ2R+R i YPOZ2R-R
+3240     F2=L2/R2^2   '* F2 to dlugosc wektora sily powodowanej ladunkiem 2-gim
+3250     F2X=F2*RX/R2*K  '* F2X to wspolrzedna x-owa sily F2
+3260     F2Y=F2*RY/R2*K  '* F2Y to wspolrzedna y-kowa sily F2
+3270     '---------------------------------------------------------------------
+3280     ' Obliczanie wplywu ladunku 1-go na ladunek probny
+3290     '  Obliczanie odleglosci pomiedzy ladunkiem 1-ym a ladunkiem probnym
+3300     '   RX - odleglosc wspolrzednej X pomiedzy ladunkiem 1-ym i probnym
+3310     '   RY - odleglosc wspolrzednej Y pomiedzy ladunkiem 1-ym i probnym
+3320     RX=X1PL-XPOZ1R '* x-owa srodka ladunku 1-go jest zawsze ujemna
+3330     RY=Y1PL        '*YPOZ1R=0 wiec RY=Y1PL a jego kwadrat zawsze nieujemny
+3340     R1=SQR(RX^2+RY^2)
+3350     ' Obliczanie sily dzialajacej na ladunek probny ze strony ladunku 1-go
+3360     '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+3370     ' R1 nigdy nie bedzie rowna 0 bo punkt ladunku probnego nigdy nie
+3380     '    osiagnie srodka ladunku 1-go.
+3390     ' Granicami sa XPOZ1R+R, XPOZ1R-R, YPOZ1R+R i YPOZ1R-R
+3400     F1=L1/R1^2   '* F1 to dlugosc wektora sily powodowanej ladunkiem 1-ym
+3410     F1X=F1*RX/R1    '* F1X to wspolrzedna x-owa sily F1
+3420     F1Y=F1*RY/R1    '* F1Y to wspolrzedna y-kowa sily F1
+3430     '---------------------------------------------------------------------
+3440     ' Dodaj do siebie wektory sily: FX=F1X+F2X i FY=F1Y+F2Y i ...
+3450     FX=(F1X+F2X)/SKALA: FY=(F1Y+F2Y)/SKALA '* Im wieksza SKALA tym lepsza
+3455     IF ABS(FX)<.0001 AND ABS(FY)<.0001 THEN RYSUJ=0: GOTO 3550 '* rownowaga
+3460     ' Zawies ten wektor w punkcie ladunku probnego aby znalezc nast.punkt
+3470     X1KL=X1PL+FX: Y1KL=Y1PL+FY             '* To sa nastepne punkty linii
+3480     ' Wejdz z tymi punktami do podprogramu aby znalezc punkt na ekranie
+3490     '---------------------------------------------------------------------
+3500     IF X1KL<XPOZ2R+R AND X1KL>XPOZ2R-R AND Y1KL<YPOZ2R+R AND Y1KL>YPOZ2R-R AND PRZYP<>2 THEN RYSUJ=0: GOTO 3550 ELSE X=X1KL: Y=Y1KL: GOSUB 10000
+3510     IF XX<MINX OR XX>MAXX OR YY<MINY OR YY>MAXY THEN RYSUJ=0: GOTO 3550
+3520     LINE -(XX,YY-14),KOLOR '* Rysuj linie do tego punktu od punktu poprzed.
+3530     X1PL=X1KL: Y1PL=Y1KL '* Punkt koncowy staje sie nowym punktem poczatko.
+3540   WEND
+3550 NEXT M
+4000 '-------------------------------------------------------------------------'
+4010 '                Rysowanie linii dla ladunku drugiego                     '
+4020 '-------------------------------------------------------------------------'
+4030 FOR M=J TO ILOSCL2
+4040   X2PL=X2P(M): Y2PL=Y2P(M)
+4050   XX=XX2P(M): YY=YY2P(M)-14
+4060   IF PRZYP<>3 THEN IF ZNAK2$=CHR$(43) THEN KOLOR=5 ELSE KOLOR=2
+4070   RYSUJ=1
+4080   PSET(XX,YY),KOLOR          '* Ustaw pioro i kolor na punkcie poczatkowym
+4090   WHILE RYSUJ       '* RYSUJ=0 znaczy 'nie rysuj';  RYSUJ=1 znaczy 'rysuj'
+4100     IF PRZYP=1 THEN F1X=0: F1Y=0: GOTO 4270
+4110     '---------------------------------------------------------------------
+4120     ' Obliczanie wplywu ladunku 1-go na ladunek probny
+4130     '  Obliczanie odleglosci pomiedzy ladunkiem 1-ym a ladunkiem probnym
+4140     '   RX - odleglosc wspolrzednej X pomiedzy ladunkiem 1-ym i probnym
+4150     '   RY - odleglosc wspolrzednej Y pomiedzy ladunkiem 1-ym i probnym
+4160     RX=X2PL-XPOZ1R '* x-owa srodka ladunku 1-go jest zawsze ujemna
+4170     RY=Y2PL        '*YPOZ1R=0 wiec RY=Y2PL a jego kwadrat zawsze nieujemny
+4180     R1=SQR(RX^2+RY^2)
+4190     ' Obliczanie sily dzialajacej na ladunek probny ze strony ladunku 1-go
+4200     '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+4210     ' R1 nigdy nie bedzie rowna 0 bo punkt ladunku probnego nigdy nie
+4220     '    osiagnie srodka ladunku 1-go.
+4230     ' Granicami sa XPOZ1R+R, XPOZ1R-R, YPOZ1R+R i YPOZ1R-R
+4240     F1=L1/R1^2   '* F1 to dlugosc wektora sily powodowanej ladunkiem 1-ym
+4250     F1X=F1*RX/R1*K  '* F1X to wspolrzedna x-owa sily F1
+4260     F1Y=F1*RY/R1*K  '* F1Y to wspolrzedna y-kowa sily F1
+4270     '---------------------------------------------------------------------
+4280     ' Obliczanie wplywu ladunku 2-go na ladunek probny
+4290     '  Obliczanie odleglosci pomiedzy ladunkiem 2-im a ladunkiem probnym
+4300     '   RX - odleglosc wspolrzednej X pomiedzy ladunkiem 2-gim i probnym
+4310     '   RY - odleglosc wspolrzednej Y pomiedzy ladunkiem 2-gim i probnym
+4320     RX=X2PL-XPOZ2R '* x-owa srodka ladunku 2-go jest zawsze dodatnia
+4330     RY=Y2PL        '*YPOZ2R=0 wiec RY=Y2PL a jego kwadrat zawsze nieujemny
+4340     R2=SQR(RX^2+RY^2)
+4350     ' Obliczanie sily dzialajacej na ladunek probny ze strony ladunku 2-go
+4360     '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+4370     ' R2 nigdy nie bedzie rowna 0 bo punkt ladunku probnego nigdy nie
+4380     '    osiagnie srodka ladunku 2-go.
+4390     ' Granicami sa XPOZ2R+R, XPOZ2R-R, YPOZ2R+R i YPOZ2R-R
+4400     F2=L2/R2^2   '* F2 to dlugosc wektora sily powodowanej ladunkiem 2-gim
+4410     F2X=F2*RX/R2    '* F2X to wspolrzedna x-owa sily F2
+4420     F2Y=F2*RY/R2    '* F2Y to wspolrzedna y-kowa sily F2
+4430     '---------------------------------------------------------------------
+4440     ' Dodaj do siebie wektory sily: FX=F1X+F2X i FY=F1Y+F2Y i ...
+4450     FX=(F1X+F2X)/SKALA: FY=(F1Y+F2Y)/SKALA '* Im wieksza SKALA tym lepsza
+4455     IF ABS(FX)<.0001 AND ABS(FY)<.0001 THEN RYSUJ=0: GOTO 4550 '* rownowaga
+4460     ' Zawies ten wektor w punkcie ladunku probnego aby znalezc nast.punkt
+4470     X2KL=X2PL+FX: Y2KL=Y2PL+FY             '* To sa nastepne punkty linii
+4480     ' Wejdz z tymi punktami do podprogramu aby znalezc punkt na ekranie
+4490     '---------------------------------------------------------------------
+4500     IF X2KL<XPOZ1R+R AND X2KL>XPOZ1R-R AND Y2KL<YPOZ1R+R AND Y2KL>YPOZ1R-R AND PRZYP<>1 THEN RYSUJ=0: GOTO 4550 ELSE X=X2KL: Y=Y2KL: GOSUB 10000
+4510     IF XX<MINX OR XX>MAXX OR YY<MINY OR YY>MAXY THEN RYSUJ=0: GOTO 4550
+4520     LINE -(XX,YY-14),KOLOR '* Rysuj linie do tego punktu od punktu poprzed.
+4530     X2PL=X2KL: Y2PL=Y2KL '* Punkt koncowy staje sie nowym punktem poczatko.
+4540   WEND
+4550 NEXT M
+5000 '---------------------------------------------------------------------
+5010 LOCATE 25,24: PRINT "Press any key to exit the program";
+5020 S$=INKEY$: IF S$="" THEN 5020
+5030 CLS: END
+5040 '
+10000 '************************************************************************
+10010 '***** Podprogram - wymiana wielkosci rzeczywistych na punkty ekranu ****
+10020 '************************************************************************
+10030 XQ=X: YQ=Y
+10040 XXQ=CINT(XQ*FQ)+XPQ    '*XX-pikselowa wspolrzedna X punktu na ekranie   *
+10050 YYQ=CINT(-YQ*FQ)+YPQ   '*YY-pikselowa wspolrzedna Y punktu na ekranie   *
+10060 XX=XXQ: YY=YYQ/1.2     '* 1.2 - wspolczynnik korygujacy zwezenie obrazu *
+10070 RETURN                 '  FQ - jednostka obu osi ukladu w pikselach     *
+
