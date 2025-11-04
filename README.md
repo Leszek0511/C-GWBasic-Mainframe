@@ -33,6 +33,8 @@ I realize that there will not be a large group of visitors to this website due t
 
 I have decided to publish this page because I always shared my knowledge selflessly. <br><br>
 
+It should be noted that GW-Basic may come to alive since at the same time I published this page, Microsoft published the full assembly code for [BASIC-M6502](https://github.com/microsoft/BASIC-M6502) on GitHub. It is an open question whether it will be a base for the creation of a versatile programming language for the modern home computers (personal computers, PCs). <br><br>
+
 You will find links to about 30 books on programming in the 'C' language here. These links are included in the README file at the bottom of this page: <br>
 
 [Programming in C and the language's headers](https://github.com/Artur1811/poradnik-c/)
@@ -52,6 +54,7 @@ Zdaję sobie sprawę, że nie będzie licznego grona wejść na tę stronę inte
 
 A jednak publikuję tę stronę bo zawsze bezinteresownie dzieliłem się swoją wiedzą. <br><br>
 
+Należy zauważyć, że GW-Basic może odżyć, ponieważ Microsoft w tym samym czasie, gdy ja opublikowałem tę stronę, on opublikował na GitHubie pełny kod assemblera dla [BASIC-M6502](https://github.com/microsoft/BASIC-M6502) . Jest sprawą otwartą powstanie języka powszechnego zastosowania na współczesne komputery domowe (osobiste, PC). <br><br>
 
 Tu znajdziesz linki do ok. 30 pozycji książkowych z zakresu programowania w języku 'C'. Te linki zawarte są w pliku README.md, na dole tej strony: <br>
 
