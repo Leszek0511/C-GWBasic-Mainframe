@@ -1,5 +1,7 @@
 ## In English
 
+My site is live on &ensp; <a href="https://leszek0511.github.io/C-GWBasic-Mainframe/">https://leszek0511.github.io/C-GWBasic-Mainframe/</a> <br>
+
 You can find sample topics here, for schools with codes that you can expand, replace modules with your own or extract some of them when creating your own programs. <br>
 
 Menu explanation: <br>
@@ -44,6 +46,8 @@ You will find links to about 30 books on programming in the 'C' language here. T
 ***
 
 ## In Polish
+
+Ta strona jest bardziej czytelna tutaj: &ensp; <a href="https://leszek0511.github.io/C-GWBasic-Mainframe/">https://leszek0511.github.io/C-GWBasic-Mainframe/</a> <br>
 
 Tu znajdziesz kilka przykładowych tematów przeznaczonych dla szkół z kodami, które można rozwinąć, wymienić moduły na swoje własne lub wyodrębnić niektóre z nich przy tworzeniu własnych programów. <br>
 
