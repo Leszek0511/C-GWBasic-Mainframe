@@ -2,7 +2,7 @@
 
 My site is live on &ensp; <a href="https://leszek0511.github.io/C-GWBasic-Mainframe/">https://leszek0511.github.io/C-GWBasic-Mainframe/</a> <br>
 
-You can find sample topics here, for schools with codes that you can expand, replace modules with your own or extract some of them when creating your own programs. <br>
+You can find sample topics here, for schools with code that you can expand, replace modules with your own or extract some of them when creating your own programs. <br>
 
 Menu explanation: <br>
 1. GWBasic
@@ -53,7 +53,7 @@ Tu znajdziesz kilka przykładowych tematów przeznaczonych dla szkół z kodami,
 
 Zdaję sobie sprawę, że nie będzie licznego grona wejść na tę stronę internetową ze względu na: <br>
 - wiek kodów: koniec tamtego wieku. Jednakże twierdzenie Pitagorasa jest znacznie starsze, żyje i czuje się znakomicie, <br>
-- kody te nie pozwoliły mi zdobyć pracę, gdzie starałem się o stanowisko programisty, <br>
+- kody te nie pozwoliły mi zdobyć pracę, kiedy starałem się o stanowisko programisty, <br>
 - obecnie 'archaiczne' środowiska pracy (TURBO C++ v.3.0, GW-Basic), którymi nie posługują się już programiści a tym bardziej nauczyciele informatyki, matematyki i fizyki. Nie mogę tych kodów wymienić na coś, czym mogą dysponować WSZYSCY, bo takiego środowiska nie ma. <br>
 
 A jednak publikuję tę stronę bo zawsze bezinteresownie dzieliłem się swoją wiedzą. <br><br>
